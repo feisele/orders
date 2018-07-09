@@ -12,44 +12,29 @@ InstallGlobalFunction(ZpOrderByMatrices, [IsPrime, IsList],
  		local order;
 		order := rec( p := p, gens := gens, n := Size(gens[1]) );
 		return Objectify(NewType(ZpOrderFamily, IsZpOrder and IsZpOrderMatrixRep) , order);
-  end
-);
+  end);
 
 InstallGlobalFunction(ZpOrderByMultiMatrices, [IsPrime, IsList],
 	function(p, gens)
 		local order;
 		order := rec( p := p, gens := gens, nvec := List(gens[1], Size) );
 		return Objectify(NewType(ZpOrderFamily, IsZpOrder and IsZpOrderMultiMatrixRep) , order);
-	end
-);
+	end);
 
 InstallMethod(String, [IsZpOrder and IsZpOrderMatrixRep],
 	function(order)
 		return Concatenation("<order over Z", String(order!.p), " on ", String(Size(order!.gens)),
 		      " generators in Z", String(order!.p), "^", String(order!.n), "x", String(order!.n),
 		      ">");
-	end
-);
+	end);
 
 InstallMethod(String, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(order)
 		return Concatenation("<order over Z", String(order!.p), " on ", String(Size(order!.gens)),
 		      " generators in ", String(Size(order!.nvec)), " Wedderburn components>");
-	end
-);
+	end);
 
 InstallMethod(ViewString, [IsZpOrder and IsZpOrderMultiMatrixRep], String);
-
-if IsBound(JupyterRenderable) then
-	InstallMethod(JupyterRender, [IsZpOrder and IsZpOrderMultiMatrixRep],
-		function(order)
-			local str;
-			str := Concatenation("&lt;order over $\\mathbb Z_{", String(order!.p), "}$ on ", String(Size(order!.gens)),
-			      " generators in ", String(Size(order!.nvec)), " Wedderburn components&gt;");
-			return JupyterRenderable(rec(("text/markdown") := str), rec());
-		end
-	);
-fi;
 
 InstallGlobalFunction(RModuleOverZpOrder, [IsZpOrder, IsList],
 	function(order, rep)
@@ -89,8 +74,7 @@ InstallGlobalFunction(RModuleOverZpOrder, [IsZpOrder, IsList],
 		fi;
 		Setter(IsZero)(M, false);
 		return M;
-	end
-);
+	end);
 
 InstallGlobalFunction(ZeroRModule, [IsZpOrder],
 	function(order)
@@ -100,44 +84,37 @@ InstallGlobalFunction(ZeroRModule, [IsZpOrder],
 	                rec( p := order!.p, order := order ) );
 		Setter(IsZero)(M, true);
 		return M;
-	end
-);
+	end);
 
 InstallMethod(ReduceModP, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(m)
 		return RModuleOverZpOrder(m!.order, List(m!.gens, v -> One(GF(m!.order!.p))*v));
-	end
-);
+	end);
 
 InstallMethod(ReduceModP, [IsRModuleOverZpOrderModp],
 	function(m)
 		return m;
-	end
-);
+	end);
 
 InstallMethod(Dimension, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(m)
 		return m!.n;
-	end
-);
+	end);
 
 InstallMethod(Dimension, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(m)
 		return 0;
-	end
-);
+	end);
 
 InstallMethod(Generators, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
 		return A!.gens;
-	end
-);
+	end);
 
 InstallMethod(Rep, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
 		return M!.gens;
-	end
-);
+	end);
 
 InstallMethod(SimpleNames, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -146,8 +123,7 @@ InstallMethod(SimpleNames, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		else
 			Error("The simple modules of this order were not named!");
 		fi;
-	end
-);
+	end);
 
 InstallMethod(ComponentNames, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -156,8 +132,7 @@ InstallMethod(ComponentNames, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		else
 			Error("The Wedderburn-components of this order were not named!");
 		fi;
-	end
-);
+	end);
 
 InstallMethod(NameSimpleModules, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
 	function(A, v)
@@ -167,8 +142,7 @@ InstallMethod(NameSimpleModules, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList]
 			Error("The second argument is supposed to be a list of strings!");
 		fi;
 		A!.simple_names := StructuralCopy(v);
-	end
-);
+	end);
 
 InstallMethod(NameWedderburnComponents, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
 	function(A, v)
@@ -178,15 +152,13 @@ InstallMethod(NameWedderburnComponents, [IsZpOrder and IsZpOrderMultiMatrixRep, 
 			Error("The second argument is supposed to be a list of strings!");
 		fi;
 		A!.component_names := StructuralCopy(v);
-	end
-);
+	end);
 
 InstallMethod(InstallTrivialEndomorphismRings, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
 		A!.Qp_end_bases := List(A!.nvec, n -> [IdentityMat(n, Integers)]);
 		A!.Qp_end_bases_smallmats := List(A!.nvec, v -> [IdentityMat(1, Integers)]);
-	end
-);
+	end);
 
 InstallMethod(InstallEndomorphismRingsNC, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
 	function(A, E)
@@ -202,8 +174,7 @@ InstallMethod(InstallEndomorphismRingsNC, [IsZpOrder and IsZpOrderMultiMatrixRep
 					v)));
 			od;
 		od;
-	end
-);
+	end);
 
 MakeReadWriteGlobal("_MAGMA_EXECUTABLE@");
 _MAGMA_EXECUTABLE@ := "magma";
@@ -211,16 +182,14 @@ _MAGMA_EXECUTABLE@ := "magma";
 InstallGlobalFunction(SetMAGMAExecutable, [IsString],
 	function(s)
 		_MAGMA_EXECUTABLE@ := s;
-	end
-);
+	end);
 
 InstallMethod(CalculateEndomorphismRingsByReynoldsNC, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
 		local endo;
 		endo := List(IrreducibleLattices(A), L -> HomByReynoldsNC(L, L));
 		InstallEndomorphismRingsNC(A, endo);
-	end
-);
+	end);
 
 InstallMethod(CalculateEndomorphismRingsWithMAGMA, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -242,15 +211,13 @@ InstallMethod(CalculateEndomorphismRingsWithMAGMA, [IsZpOrder and IsZpOrderMulti
 		Exec("rm", fdin);
 		InstallEndomorphismRingsNC(A, ReadAsFunction(fdout)());
 		Exec("rm", fdout);
-	end
-);
+	end);
 
 InstallMethod(String, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(m)
 		return Concatenation("<lattice over an order given by representation on Z", String(m!.p),
 		                   "^1x", String(m!.n),  ">");
-	end
-);
+	end);
 
 InstallMethod(ViewString, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep], String);
 
@@ -258,16 +225,14 @@ InstallMethod(String, [IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep
 	function(m)
 		return Concatenation("<torsion module over an order given by representation on GF(",
 		                    String(m!.p), ")^1x", String(m!.n),  ">");
-	end
-);
+	end);
 
 InstallMethod(ViewString, [IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep], String);
 
 InstallMethod(String, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(m)
 		return Concatenation("<zero module over an order over Z", String(m!.p), ">");
-	end
-);
+	end);
 
 InstallMethod(ViewString, [IsRModuleOverZpOrder and IsZeroRModuleRep], String);
 
@@ -318,8 +283,7 @@ InstallMethod(PrintAsFunction, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		fi;
 
 		Print("return B;\n");
-	end
-);
+	end);
 
 InstallMethod(PrintAsFunction, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
@@ -338,14 +302,12 @@ InstallMethod(PrintAsFunction, [IsRModuleOverZpOrder and IsRModuleByRepresentati
 		else
 			Error("Unsupported module type! This should not happen!");
 		fi;
-	end
-);
+	end);
 
 InstallMethod(SaveAsFunction, [IsString, IsObject],
 	function(filename, X)
 		PrintTo1(filename, function() PrintAsFunction(X); end);
-	end
-);
+	end);
 
 InstallMethod(SaveAsRecord, [IsString, IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(filename, A)
@@ -383,14 +345,12 @@ InstallMethod(SaveAsRecord, [IsString, IsZpOrder and IsZpOrderMultiMatrixRep],
 		fi;
 		PrintTo(out, "return A;\n");
 		CloseStream(out);
-	end
-);
+	end);
 
 InstallMethod(ReadOrder, [IsString],
 	function(filename)
 		return ReadAsFunction(filename)();
-	end
-);
+	end);
 
 InstallMethod(ReadModule, [IsString, IsZpOrder],
 	function(filename, A)
@@ -398,8 +358,7 @@ InstallMethod(ReadModule, [IsString, IsZpOrder],
 		M := ReadAsFunction(filename)();
 		M!.order := A;
 		return M;
-	end
-);
+	end);
 
 InstallGlobalFunction(UnFlattenMultiMatrixNC, [IsList, IsList],
 	function(v, dimvec)
@@ -410,8 +369,7 @@ InstallGlobalFunction(UnFlattenMultiMatrixNC, [IsList, IsList],
 			v0[k] := List([1..dimvec[k]], i -> v0[k]{[(i-1)*dimvec[k]+1..i*dimvec[k]]});
 		od;
 		return v0;
-	end
-);
+	end);
 
 InstallMethod(DirectSumOfModules, [IsList],
 	function(l)
@@ -432,15 +390,13 @@ InstallMethod(DirectSumOfModules, [IsList],
 		else
 			TryNextMethod();
 		fi;
-	end
-);
+	end);
 
 InstallMethod(DirectSumOfModules, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
                                    IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M, N)
 		return DirectSumOfModules([M, N]);
-	end
-);
+	end);
 
 InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMatrixRep],
 	function(A)
@@ -454,8 +410,7 @@ InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMatrixRep],
 			M!.Qp_end_basis_smallmats := A!.Qp_end_basis_smallmats;
 		fi;
 		return [M];
-	end
-);
+	end);
 
 InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -475,8 +430,7 @@ InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMultiMatrixRep],
 			fi;
 		od;
 		return M;
-	end
-);
+	end);
 
 InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMatrixRep],
 	function(A)
@@ -490,8 +444,7 @@ InstallMethod(IrreducibleLattices, [IsZpOrder and IsZpOrderMatrixRep],
 			M!.Qp_end_basis_smallmats := A!.Qp_end_basis_smallmats;
 		fi;
 		return [M];
-	end
-);
+	end);
 
 InstallMethod(BlocksOfZpOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -515,8 +468,7 @@ InstallMethod(BlocksOfZpOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 			fi;
 		od;
 		return blocks;
-	end
-);
+	end);
 
 InstallMethod(ExtractWedderburnComponents, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
 	function(A, l)
@@ -562,8 +514,7 @@ InstallMethod(ExtractWedderburnComponents, [IsZpOrder and IsZpOrderMultiMatrixRe
 			B!.eval_map := A!.eval_map{l};
 		fi;
 		return B;
-	end
-);
+	end);
 
 InstallMethod(DirectSumOfOrders, [IsList],
 	function(l)
@@ -602,14 +553,12 @@ InstallMethod(DirectSumOfOrders, [IsList],
 		# [...TODO... (maybe) transfer simple modules]
 
 		return B;
-	end
-);
+	end);
 
 InstallMethod(DirectSumOfOrders, [IsZpOrder, IsZpOrder],
 	function(A, B)
 		return DirectSumOfOrders([A, B]);
-	end
-);
+	end);
 
 InstallMethod(NameSimpleModulesByDims, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -618,8 +567,7 @@ InstallMethod(NameSimpleModulesByDims, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		names := List([1..Size(dims)], i -> Concatenation(String(dims[i]), Concatenation(List(Filtered(dims{[1..i-1]},
 			j -> j = dims[i]), z -> "'"))));
 		A!.simple_names := names;
-	end
-);
+	end);
 
 InstallMethod(NameWedderburnComponentsByDims, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -628,8 +576,7 @@ InstallMethod(NameWedderburnComponentsByDims, [IsZpOrder and IsZpOrderMultiMatri
 		names := List([1..Size(dims)], i -> Concatenation(String(dims[i]), Concatenation(List(Filtered(dims{[1..i-1]},
 			j -> j = dims[i]), z -> "'"))));
 		A!.component_names := names;
-	end
-);
+	end);
 
 ## Algorithms
 
@@ -649,8 +596,7 @@ InstallMethod(SimpleModules, [IsZpOrder and IsZpOrderMatrixRep],
 
 		order!.simple := simple;
 		return simple;
-	end
-);
+	end);
 
 InstallMethod(SimpleModules, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(order)
@@ -697,8 +643,7 @@ InstallMethod(SimpleModules, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		order!.simple_multiplicities := mult;
 
 		return simple;
-	end
-);
+	end);
 
 InstallMethod(DecompositionMatrix, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -706,8 +651,7 @@ InstallMethod(DecompositionMatrix, [IsZpOrder and IsZpOrderMultiMatrixRep],
 			SimpleModules(A);
 		fi;
 		return A!.simple_multiplicities;
-	end
-);
+	end);
 
 InstallMethod(DecompositionMatrix, [IsZpOrder and IsZpOrderMatrixRep],
 	function(A)
@@ -715,8 +659,7 @@ InstallMethod(DecompositionMatrix, [IsZpOrder and IsZpOrderMatrixRep],
 			SimpleModules(A);
 		fi;
 		return [ A!.simple_multiplicities ];
-	end
-);
+	end);
 
 InstallMethod(MaximalSubmoduleBases, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
                                       IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
@@ -765,8 +708,7 @@ InstallMethod(MaximalSubmoduleBases, [IsRModuleOverZpOrder and IsRModuleByRepres
 		fi;
 
 		return max;
-	end
-);
+	end);
 
 InstallMethod(MaximalSubmoduleBases, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M) # Calculate all maximal submodules as kernels of homomorphisms onto simple modules
@@ -779,8 +721,7 @@ InstallMethod(MaximalSubmoduleBases, [IsRModuleOverZpOrder and IsRModuleByRepres
 			Append(max, List(MaximalSubmoduleBases(M, S), m -> [m, S]));
 		od;
 		return max;
-	end
-);
+	end);
 
 InstallMethod(SubmoduleByBasisNC, [IsRModuleOverZpOrder, IsList],
 	function(M, b)
@@ -789,8 +730,7 @@ InstallMethod(SubmoduleByBasisNC, [IsRModuleOverZpOrder, IsList],
 		else
 			TryNextMethod();
 		fi;
-	end
-);
+	end);
 
 InstallMethod(SubmoduleByBasisNC, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep, IsMatrix],
 	function(M, b)
@@ -833,8 +773,7 @@ InstallMethod(SubmoduleByBasisNC, [IsRModuleOverZpOrder and IsRModuleByRepresent
 				Error("Unexpected (and unsupported) module type. This shouldn't happen.");
 			fi;
 			return m;
-	end
-);
+	end);
 
 InstallMethod(MaximalSubmodules, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
                                   IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
@@ -848,8 +787,7 @@ InstallMethod(MaximalSubmodules, [IsRModuleOverZpOrder and IsRModuleByRepresenta
 		od;
 
 		return max;
-	end
-);
+	end);
 
 InstallMethod(MaximalSubmodules, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M) # Returns pairs [N, S], where N is a maximal submodule of M and S = M/N
@@ -862,8 +800,7 @@ InstallMethod(MaximalSubmodules, [IsRModuleOverZpOrder and IsRModuleByRepresenta
 		od;
 
 		return max;
-	end
-);
+	end);
 
 InstallMethod(MaximalSubmoduleBasesMTX, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M) # Returns a list [B_1, ... B_k] of maximal submodules given by basis-matrices
@@ -884,8 +821,7 @@ InstallMethod(MaximalSubmoduleBasesMTX, [IsRModuleOverZpOrder and IsRModuleByRep
 		else
 			Error("Unexpected (and unsupported) module type. This shouldn't happen.");
 		fi;
-	end
-);
+	end);
 
 InstallGlobalFunction(LatticeAlgorithm,
 	[IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
@@ -928,8 +864,7 @@ InstallGlobalFunction(LatticeAlgorithm,
 		od;
 
 		return lat;
-	end
-);
+	end);
 
 InstallGlobalFunction(LatticesWithSimpleRadQuo, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
@@ -937,8 +872,7 @@ InstallGlobalFunction(LatticesWithSimpleRadQuo, [IsRLatticeOverZpOrder and IsRMo
 
 		lat := LatticeAlgorithm(M, true);
 		return List(lat, l -> [SubmoduleByBasisNC(M, l[1]), l[2]]);
-	end
-);
+	end);
 
 InstallGlobalFunction(GlueUpNC, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
                                  IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
@@ -993,8 +927,7 @@ InstallGlobalFunction(GlueUpNC, [IsRLatticeOverZpOrder and IsRModuleByRepresenta
 				Concatenation(P!.embedding_into_irr_lat[2], Q!.embedding_into_irr_lat[2])];
 		fi;
 		return [X, T];
-	end
-);
+	end);
 
 InstallMethod(ProjectiveIndecomposableLattices, [IsZpOrder and IsZpOrderMatrixRep],
 	function(A)
@@ -1025,8 +958,7 @@ InstallMethod(ProjectiveIndecomposableLattices, [IsZpOrder and IsZpOrderMatrixRe
 		od;
 
 		return ret;
-	end
-);
+	end);
 
 InstallMethod(ProjectiveIndecomposableLattices, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -1067,8 +999,7 @@ InstallMethod(ProjectiveIndecomposableLattices, [IsZpOrder and IsZpOrderMultiMat
 
 		A!.pim := List(P, x -> x[1]);
 		return P;
-	end
-);
+	end);
 
 InstallMethod(BasicOrder, [IsList],
 	function(PS) # Calculates (+)_i (+)_j Hom(PS[1][i],PS[1][j])^tr, where PS is a list with
@@ -1200,14 +1131,12 @@ InstallMethod(BasicOrder, [IsList],
 		B!.gens_are_basis := true;
 
 		return B;
-	end
-);
+	end);
 
 InstallMethod(BasicOrder, [IsZpOrder],
 	function(A)
 		return BasicOrder(ProjectiveIndecomposableLattices(A));
-	end
-);
+	end);
 
 InstallMethod(RadicalOfModule, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
@@ -1225,14 +1154,12 @@ InstallMethod(RadicalOfModule, [IsRModuleOverZpOrder and IsRModuleByRepresentati
 			TryNextMethod();
 		fi;
 		return [J, List([1..Size(edim)], i -> Size(hom2S[i])/edim[i])];
-	end
-);
+	end);
 
 InstallMethod(RadicalOfModule, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(M)
 		return [M, List([1..Size(SimpleModules(M!.order))], v -> 0)];
-	end
-);
+	end);
 
 InstallMethod(RadicalSeries, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep, IsPosInt],
 	function(M, n)
@@ -1245,8 +1172,7 @@ InstallMethod(RadicalSeries, [IsRModuleOverZpOrder and IsRModuleByRepresentation
 			Add(lst, Xi[2]);
 		od;
 		return lst;
-	end
-);
+	end);
 
 InstallMethod(TopEpimorphism, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M) # Returns [M/Rad M,phi,v,hom], where phi is an epimorphism from M onto M/Rad M. v Is a vector of
@@ -1276,8 +1202,7 @@ InstallMethod(TopEpimorphism, [IsRModuleOverZpOrder and IsRModuleByRepresentatio
 			q -> SimpleModules(M!.order)[l]))));
 		phi := List([1..M!.n], l -> Flat(List(hom1, q -> List(q, v -> v[l]))));
 		return [R, phi, List(hom1, Size), hom1];
-	end
-);
+	end);
 
 InstallMethod(LiftHomomorphismNC, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep, IsMatrix,
 	IsRModuleOverZpOrder and IsRModuleByRepresentationRep, IsMatrix,
@@ -1305,8 +1230,7 @@ InstallMethod(LiftHomomorphismNC, [IsRModuleOverZpOrder and IsRModuleByRepresent
 		fi;
 		ret := Sum([1..Size(hom)], i -> coeff[i]*hom0[i]);
 		return ret;
-	end
-);
+	end);
 
 InstallMethod(LiftHomomorphismToDirectSumNC, [IsList, IsList, IsMatrix,
 	IsRModuleOverZpOrder and IsRModuleByRepresentationRep, IsMatrix,
@@ -1359,8 +1283,7 @@ InstallMethod(LiftHomomorphismToDirectSumNC, [IsList, IsList, IsMatrix,
 		fi;
 		ret := Sum([1..Size(hom)], i -> coeff[i]*hom0[i]);
 		return ret;
-	end
-);
+	end);
 
 BlockIJ := function(A,i,j)
 	local p, a;
@@ -1394,8 +1317,7 @@ InstallMethod(ProjectiveIndecomposableForBasicOrder, [IsZpOrder and IsZpOrderMul
 			q -> List(d[q], z -> IrreducibleLattices(A)[q])))),
 			Concatenation(List([1..Size(SimpleModules(A))],
 				z -> List(BlockIJ(A, z, s), v -> Flat(List([1..Size(A!.nvec)], i -> v[i]{d[i]}))))));
-	end
-);
+	end);
 
 InstallMethod(ProjectiveIndecomposableLatticesForBasicOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -1404,8 +1326,7 @@ InstallMethod(ProjectiveIndecomposableLatticesForBasicOrder, [IsZpOrder and IsZp
 		fi;
 
 		return List([1..Size(SimpleModules(A))], x -> [A!.pim[x], SimpleModules(A)[x]]);
-	end
-);
+	end);
 
 InstallMethod(ProjectiveCover, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M) # Returns [P, eta], where P is the projective cover of M and eta the epimorphism P -> M
@@ -1424,14 +1345,12 @@ InstallMethod(ProjectiveCover, [IsRModuleOverZpOrder and IsRModuleByRepresentati
 		phi := DiagonalJoin(Concatenation(List([1..Size(SimpleModules(A))], i -> List([1..V[3][i]], j -> epi[i]))));
 		eta := LiftHomomorphismToDirectSumNC(A!.pim, top, phi, M, V[2], V[1]);
 		return [P0, eta];
-	end
-);
+	end);
 
 InstallMethod(ProjectiveCover, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(M)
 		return ZeroRModule(M!.order);
-	end
-);
+	end);
 
 InstallMethod(HellerTranslate, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
@@ -1445,14 +1364,12 @@ InstallMethod(HellerTranslate, [IsRModuleOverZpOrder and IsRModuleByRepresentati
 		else
 			TryNextMethod(); # Shouldn't happen...
 		fi;
-	end
-);
+	end);
 
 InstallMethod(HellerTranslate, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(M)
 		return ZeroRModule(M!.order);
-	end
-);
+	end);
 
 InstallMethod(HellerTranslateModular, [IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
 	function(M)
@@ -1460,14 +1377,12 @@ InstallMethod(HellerTranslateModular, [IsRModuleOverZpOrderModp and IsRModuleByR
 		P := ProjectiveCover(M);
 		K := NullspaceMat(P[2]);
 		return SubmoduleByBasisNC(ReduceModP(P[1]), K);
-	end
-);
+	end);
 
 InstallMethod(HellerTranslateModular, [IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(M)
 		return ZeroRModule(M!.order);
-	end
-);
+	end);
 
 InstallMethod(GeneratorsForBasicOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A)
@@ -1592,8 +1507,7 @@ InstallMethod(GeneratorsForBasicOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		B!.simple_multiplicities := A!.simple_multiplicities;
 
 		return [B, lincomb];
-	end
-);
+	end);
 
 InstallGlobalFunction(HomForLattices, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
                                        IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsList],
@@ -1696,8 +1610,7 @@ InstallGlobalFunction(HomForLattices, [IsRLatticeOverZpOrder and IsRModuleByRepr
 		fi;
 
 		return ret;
-	end
-);
+	end);
 
 InstallMethod(HomToSimpleNC, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
                                IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
@@ -1709,15 +1622,13 @@ InstallMethod(HomToSimpleNC, [IsRModuleOverZpOrder and IsRModuleByRepresentation
 		hom := MTX.Homomorphisms(Ntr, Mtr);
 
 		return List(hom, m -> TransposedMatImmutable(m));
-	end
-);
+	end);
 
 InstallMethod(HomToSimpleNC, [IsRModuleOverZpOrder and IsZeroRModuleRep,
                                IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
 	function(M, N)
 		return [ ];
-	end
-);
+	end);
 
 InstallMethod(Hom, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
                     IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
@@ -1731,8 +1642,7 @@ InstallMethod(Hom, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
 		else
 			return HomForLattices(M, N, [1])[1];
 		fi;
-	end
-);
+	end);
 
 InstallMethod(Hom, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
                     IsRModuleOverZpOrder and IsRModuleByRepresentationRep],
@@ -1806,22 +1716,19 @@ InstallMethod(Hom, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
 		od;
 
 		return hom;
-	end
-);
+	end);
 
 InstallMethod(Hom, [IsRModuleOverZpOrder and IsZeroRModuleRep,
                     IsRModuleOverZpOrder],
 	function(M, N)
 		return [ ];
-	end
-);
+	end);
 
 InstallMethod(Hom, [IsRModuleOverZpOrder,
                     IsRModuleOverZpOrder and IsZeroRModuleRep],
 	function(M, N)
 		return [ ];
-	end
-);
+	end);
 
 InstallMethod(CondensationData, [IsGroup, IsGroup, IsCharacter],
 	function(G, K, chi)
@@ -1841,14 +1748,12 @@ InstallMethod(CondensationData, [IsGroup, IsGroup, IsCharacter],
 		gens := List(SmallGeneratingSet(Range(epi)), g -> PreImagesRepresentative(epi, g));
 		Append(gens, Filtered(List(DoubleCosets(G, T, T), Representative), g -> not IsOne(g)));
 		return rec( idempot := e, gens := gens, primes := AsSet(FactorsInt(Size(K))), G := G, K := K );
-	end
-);
+	end);
 
 InstallMethod(CondensationData, [IsGroup, IsGroup],
 	function(G, K)
 		return CondensationData(G, K, TrivialCharacter(K));
-	end
-);
+	end);
 
 InstallGlobalFunction(CondenseMatricesWithEvalMapNC, [IsFunction, IsRecord],
 	function(hom, data)
@@ -1862,16 +1767,14 @@ InstallGlobalFunction(CondenseMatricesWithEvalMapNC, [IsFunction, IsRecord],
 		baseR := RightInverse(base);
 		cgens := List(data.gens, g -> base*emat*(hom(g))*emat*baseR);
 		return [cgens, base, baseR];
-	end
-);
+	end);
 
 InstallGlobalFunction(CondenseMatricesNC, [IsList, IsList, IsRecord],
 	function(Ggens, Greps, data)
 		local hom;
 		hom := GroupHomomorphismByImagesNC(data.G, GL(Size(Greps[1]), Integers), Ggens, Greps);
 		return CondenseMatricesWithEvalMapNC(g -> g^hom, data);
-	end
-);
+	end);
 
 InstallGlobalFunction(CondenseTorsionRepNC, [IsList, IsList, IsRecord],
 	function(Ggens, Greps, p, data)
@@ -1886,8 +1789,7 @@ InstallGlobalFunction(CondenseTorsionRepNC, [IsList, IsList, IsRecord],
 		baseR := RightInverse(base);
 		cgens := List(data.gens, g -> base*emat*(g^hom)*emat*baseR);
 		return cgens;
-	end
-);
+	end);
 
 InstallMethod(CondenseGroupRingNC, [IsZpOrder and IsZpOrderMultiMatrixRep,
                                       IsList, IsRecord],
@@ -1927,14 +1829,12 @@ InstallMethod(CondenseGroupRingNC, [IsZpOrder and IsZpOrderMultiMatrixRep,
 			od;
 		fi;
 		return B;
- 	end
-);
+ 	end);
 
 InstallMethod(CondenseGroupRingNC, [IsZpOrder, IsRecord],
 	function(A, data) # Assumes that GeneratorsOfGroup(data.G) correspond to the generators of A
 		return CondenseGroupRingNC(A, GeneratorsOfGroup(data.G), data);
-	end
-);
+	end);
 
 InstallMethod(CondensationProperties, [IsZpOrder, IsList, IsRecord],
 	function(A, gens, data)
@@ -1961,14 +1861,12 @@ InstallMethod(CondensationProperties, [IsZpOrder, IsList, IsRecord],
 		Display(TransposedMat(M*TransposedMat([dims]))[1]);
 		Print("Lost ", Size(S) - Size(nonzero), " simple modules\n");
 		Print("Lost ", Size(A!.nvec) - Size(M), " Wedderburn-components\n");
- 	end
-);
+ 	end);
 
 InstallMethod(CondensationProperties, [IsZpOrder, IsRecord],
 	function(A, data)
 		CondensationProperties(A, GeneratorsOfGroup(data.G), data);
-	end
-);
+	end);
 
 InstallMethod(DiagonalJoin, [IsList],
 	function(L)
@@ -1995,14 +1893,12 @@ InstallMethod(DiagonalJoin, [IsList],
 		od;
 
 		return M;
-	end
-);
+	end);
 
 InstallMethod(DiagonalJoin, [IsMatrix, IsMatrix],
 	function(M, N)
 		return DiagonalJoin([M, N]);
-	end
-);
+	end);
 
 InstallMethod(RightInverse, [IsMatrix],
 	function(M)
@@ -2031,8 +1927,7 @@ InstallMethod(RightInverse, [IsMatrix],
 		else
 			return Q*(T^-1);
 		fi;
-	end
-);
+	end);
 
 # Specific setup for the symmetric groups
 
@@ -2049,8 +1944,7 @@ InstallGlobalFunction(ZpSnWedderburnComponentsNC, [IsPrime, IsList],
 		A!.eval_map := List(rho, x -> function(g)  return g^x; end);
 		NameSimpleModulesByDims(A);
 		return A;
-	end
-);
+	end);
 
 InstallGlobalFunction(PartitionAsString, [IsList],
 	function(p)
@@ -2061,14 +1955,12 @@ InstallGlobalFunction(PartitionAsString, [IsList],
 	         else return Concatenation(String(x[1]),"^{", String(x[2]), "}"); fi; end);
 		ret := Concatenation("(", p0[1], Concatenation(List(p0{[2..Size(p0)]}, x -> Concatenation(",", x))), ")");
 		return ret;
-	end
-);
+	end);
 
 InstallGlobalFunction(ZpSn,
 	function(p, n)
 		return ZpSnWedderburnComponentsNC(p, Reversed(Partitions(n)));
-	end
-);
+	end);
 
 # Discriminants etc.:
 
@@ -2083,14 +1975,12 @@ InstallMethod(Valuation, [IsInt, IsInt],
 			n0 := n0/p; v := v + 1;
 		until not IsInt(n0);
 		return v;
-	end
-);
+	end);
 
 InstallMethod(Valuation, [IsRat, IsInt],
 	function(r, p) # The (exponent-)valuation nu_p(r)
 		 return Valuation(NumeratorRat(r), p) - Valuation(DenominatorRat(r), p);
-	end
-);
+	end);
 
 InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
 	function(A, u)
@@ -2117,8 +2007,7 @@ InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList]
 		od;
 
 		return G;
-	end
-);
+	end);
 
 InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMatrixRep, IsRat],
 	function(A, u)
@@ -2138,8 +2027,7 @@ InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMatrixRep, IsRat],
 		od;
 
 		return G;
-	end
-);
+	end);
 
 # Finds all suborders B of A which are minimal w.r.t. B \supseteq B^#
 InstallMethod(SelfdualSuborders, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList],
@@ -2254,8 +2142,7 @@ InstallMethod(SelfdualSuborders, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList]
 		od;
 
 		return ret;
-	end
-);
+	end);
 
 InstallMethod(AreConjugate, [IsZpOrder and IsZpOrderMultiMatrixRep, IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(A, B)
@@ -2363,8 +2250,7 @@ InstallMethod(AreConjugate, [IsZpOrder and IsZpOrderMultiMatrixRep, IsZpOrder an
 		od;
 
 		return false;
-	end
-);
+	end);
 
 #################################### Newer functionality
 
@@ -2404,8 +2290,7 @@ InstallGlobalFunction(HomByReynoldsNC, [IsRLatticeOverZpOrder and IsRModuleByRep
         hom := List(hom, z -> List([1..Dimension(M)],  zz -> z{[1..Dimension(N)] + (zz - 1)*Dimension(N)}));
     fi;
     return hom;
-	end
-);
+	end);
 
 # Probabilistic test for isomorphism (used internally)
 InstallGlobalFunction(_QuickIso@,
@@ -2419,8 +2304,7 @@ InstallGlobalFunction(_QuickIso@,
 		 fi;
 	  od;
 	  return false;
-	end
-);
+	end);
 
 # Some numerical invariants attached to a lattice (used internally)
 InstallGlobalFunction(_LatticeInvariants@,
@@ -2440,8 +2324,7 @@ InstallGlobalFunction(_LatticeInvariants@,
 		 Add(loewy, rad[2]);
 	  od;
 	  return [inv, loewy];
-	end
-);
+	end);
 
 InstallMethod(IsomorphismRModules, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
                     IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
@@ -2507,8 +2390,7 @@ InstallMethod(IsomorphismRModules, [IsRLatticeOverZpOrder and IsRModuleByReprese
 	  fi;
 
 	  return true;
-	end
-);
+	end);
 
 # Determines a subset of all sublattices of M, considering first M, then the
 # maximal sublattices of M, then the maximal sublattices of the maximal sublattices,
@@ -2564,15 +2446,13 @@ InstallGlobalFunction(AllLatticesCond, [IsRLatticeOverZpOrder and IsRModuleByRep
 		od;
 
 		return List(lat, L -> L[1]);
-	end
-);
+	end);
 
 # Returns a list of all isoclasses of sublattices of M
 InstallGlobalFunction(AllLattices, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
   	return AllLatticesCond(M, x -> true);
-	end
-);
+	end);
 
 # Returns a list of all isoclasses sublattices of DirectSum(L1, L2) which surject onto
 # both L1 and L2
@@ -2594,8 +2474,7 @@ InstallGlobalFunction(AllLatticesInd, [IsRLatticeOverZpOrder and IsRModuleByRepr
 		 fi;
 	  end;
 	  return AllLatticesCond(L, surj);
-	end
-);
+	end);
 
 # This function takes a list "lst" of rational matrices which generate a
 # Z-subalgebra of GL(n,Q) which is finitely generated as a Z-modue (not checked),
@@ -2615,15 +2494,13 @@ InstallGlobalFunction(SpinningAlgorithmNC,
 			ret := List(lst, g -> bas*g*bas^(-1));
 		until ForAll(Flat(ret), IsInt);
 		return ret;
-	end
-);
+	end);
 
 # Mostly for internal use, but may be useful elsewhere
 InstallGlobalFunction(CoxeterLength, [IsPerm, IsPosInt],
 	function(sigma, n)
 		return Sum(List([1..n], i -> Size(Filtered([i+1..n], j -> i^sigma > j^sigma))));
-	end
-);
+	end);
 
 # Mostly for internal use, but may be useful elsewhere
 InstallGlobalFunction(EnumerateStandardTableaux, [IsList],
@@ -2655,8 +2532,7 @@ InstallGlobalFunction(EnumerateStandardTableaux, [IsList],
 		end;
 
 		return List(recursive(lambda2), x -> Filtered(x, y -> Size(y) <> 0));
-	end
-);
+	end);
 
 # Mostly for internal use, but may be useful elsewhere
 InstallGlobalFunction(ContentVector, [IsList],
@@ -2669,8 +2545,7 @@ InstallGlobalFunction(ContentVector, [IsList],
 			od;
 		od;
 		return a;
-	end
-);
+	end);
 
 # Mostly for internal use, but may be useful elsewhere
 InstallGlobalFunction(IsStdTableau, [IsList],
@@ -2681,8 +2556,7 @@ InstallGlobalFunction(IsStdTableau, [IsList],
 			fi;
 		fi;
 		return false;
-	end
-);
+	end);
 
 # Implements Young's "natural" Specht representation for S^lambda, where lambda
 # is a partition of some n >= 1. See G.D.James: "The Representation Theory of
@@ -2747,8 +2621,7 @@ InstallGlobalFunction(NaturalSpechtRepresentation, [ IsList ],
 		gen := List([1..n-1], j -> (j, j+1));
 		return GroupHomomorphismByImagesNC(SymmetricGroup(n), GL(Size(std), Integers),
 				gen, lst);
-	end
-);
+	end);
 
 MakeReadWriteGlobal("_DEBUG_OUTPUT@");
 _DEBUG_OUTPUT@ := false;
@@ -2756,24 +2629,21 @@ _DEBUG_OUTPUT@ := false;
 InstallGlobalFunction(SetDebugOutput, [IsBool],
 	function(b)
 		_DEBUG_OUTPUT@ := b;
-	end
-);
+	end);
 
 InstallGlobalFunction(_Debug@,
 	function(arg)
 		if _DEBUG_OUTPUT@ then
 			CallFuncList(Print, arg);
 		fi;
-	end
-);
+	end);
 
 InstallGlobalFunction(_DebugWriteByte@,
 	function(arg)
 		if _DEBUG_OUTPUT@ then
 			CallFuncList(WriteByte, arg);
 		fi;
-	end
-);
+	end);
 
 ##### Pretty output
 
@@ -2870,8 +2740,7 @@ InstallGlobalFunction(CreateHTMLSummary, [IsString, IsString, IsString, IsZpOrde
 
 		PrintTo(out, "</center>");
 		CloseStream(out);
-	end
-);
+	end);
 
 InstallGlobalFunction(PrintDecompositionMatrixAsLatex,
 	function(A, stream...)
@@ -2912,8 +2781,7 @@ InstallGlobalFunction(PrintDecompositionMatrixAsLatex,
 		od;
 		PrintTo(out, "\\hline\\end{array}\n");
 		PrintTo(out, "$$\n");
-	end
-);
+	end);
 
 InstallGlobalFunction(PrintBasisOfOrderAsMarkdown,
 	function(A, stream...)
@@ -2990,10 +2858,17 @@ InstallGlobalFunction(PrintBasisOfOrderAsMarkdown,
 				fi;
 			od;
 		od;
-	end
-);
+	end);
 
 if IsBound(JupyterRender) then
+	InstallMethod(JupyterRender, [IsZpOrder and IsZpOrderMultiMatrixRep],
+		function(order)
+			local str;
+			str := Concatenation("&lt;order over $\\mathbb Z_{", String(order!.p), "}$ on ", String(Size(order!.gens)),
+			      " generators in ", String(Size(order!.nvec)), " Wedderburn components&gt;");
+			return JupyterRenderable(rec(("text/markdown") := str), rec());
+		end);
+
 	InstallGlobalFunction(JupyterDisplayDecompositionMatrix, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		function(A)
 			local str, out;
@@ -3001,9 +2876,7 @@ if IsBound(JupyterRender) then
 			out := OutputTextString(str,true);
 			PrintDecompositionMatrixAsLatex(A, out);
 			return JupyterRenderable(rec(("text/latex") := str), rec());
-		end
-	);
-
+		end);
 
 	InstallGlobalFunction(JupyterDisplayBasisOfOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		function(A)
@@ -3012,8 +2885,7 @@ if IsBound(JupyterRender) then
 			out := OutputTextString(str,true);
 			PrintBasisOfOrderAsMarkdown(A, out);
 			return JupyterRenderable(rec(("text/markdown") := str), rec());
-		end
-	);
+		end);
 
 	InstallGlobalFunction(JupyterDisplayMultiMatrix, [IsList],
 		function(lst)
@@ -3025,6 +2897,5 @@ if IsBound(JupyterRender) then
 			od;
 			Append(str, "\\right]$");
 			return JupyterRenderable(rec(("text/latex") := str), rec());
-		end
-	);
+		end);
 fi;
