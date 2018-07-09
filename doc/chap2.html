@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (orders) - Chapter 2: Provided Functions</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap2"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chapBib.html">Bib</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"></p>
+<p><a id="X846FF7C17F240B96" name="X846FF7C17F240B96"></a></p>
+<div class="ChapSects"><a href="chap2.html#X846FF7C17F240B96">2 <span class="Heading">Provided Functions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X868F7BAB7AC2EEBC">2.1 <span class="Heading">Basics</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X856274FC87141FBD">2.1-1 ZpOrderByMultiMatrices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D425D657F5F2B5F">2.1-2 IrreducibleLattices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C61261F7C5E53B8">2.1-3 SimpleModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84701640811D2345">2.1-4 DecompositionMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B131FA581D6F41C">2.1-5 NameSimpleModulesByDims</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7858621880AACFC9">2.1-6 NameSimpleModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D6D80837D5BAE4B">2.1-7 SimpleNames</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X823D95757CCF12A8">2.1-8 NameWedderburnComponentsByDims</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84135ED17EDAB54C">2.1-9 NameWedderburnComponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85361C2087965A86">2.1-10 ComponentNames</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X861A1E2B834F862A">2.1-11 DirectSumOfOrders</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X861A1E2B834F862A">2.1-12 DirectSumOfOrders</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X780C417B7C94AB50">2.1-13 BlocksOfZpOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BF4A4AC868C59DA">2.1-14 ExtractWedderburnComponents</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D266110849A590E">2.1-15 RModuleOverZpOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7876438B86F89DBE">2.1-16 ZeroRModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E6926C6850E7C4E">2.1-17 Dimension</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BD5B55C802805B4">2.1-18 Generators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7884D657865C7D03">2.1-19 Rep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X81F4814E83269C82">2.1-20 ReduceModP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8133D3468687AD8B">2.1-21 SubmoduleByBasisNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7ED27D2485D61669">2.1-22 MaximalSubmoduleBases</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83982AF587B1B130">2.1-23 MaximalSubmoduleBasesMTX</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E3FE8F883A5A3B8">2.1-24 MaximalSubmodules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80015C78876B4F1E">2.1-25 Hom</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80037271826B2FF8">2.1-26 HomToSimpleNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X81C93A707C017CF4">2.1-27 HomForLattices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E44920683157DE2">2.1-28 RadicalOfModule</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84F41D288028219F">2.1-29 TopEpimorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7929281B848A9FBE">2.1-30 RadicalSeries</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X78E0861E7CEE3540">2.1-31 GramMatrixOfTrace</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X817014A9873DB92E">2.2 <span class="Heading">Endomorphism Rings of the Irreducible Lattices</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8661E79280CE7F4A">2.2-1 InstallTrivialEndomorphismRings</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E720E8785EAFC01">2.2-2 InstallEndomorphismRingsNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X841431788064377A">2.2-3 CalculateEndomorphismRingsByReynoldsNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A89BE64821A10B2">2.2-4 CalculateEndomorphismRingsWithMAGMA</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79BE448978FB33C9">2.2-5 SetMAGMAExecutable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X84199ABF87A5579B">2.2-6 SetDebugOutput</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X861303627B2C81AA">2.3 <span class="Heading">Condensation for Group Algebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86812D218426AE41">2.3-1 CondensationData</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82C92CA486A7E6A6">2.3-2 CondenseGroupRingNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X852E219286128859">2.3-3 CondensationProperties</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A54F9257C8616E3">2.3-4 CondenseMatricesNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X877AC25E7F9A8F9F">2.3-5 CondenseMatricesWithEvalMapNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BE15B3B82139138">2.3-6 CondenseTorsionRepNC</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A802E898553AA42">2.4 <span class="Heading">Projective Modules &amp; Basic Algebras</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C656E4F85EA55BB">2.4-1 ProjectiveIndecomposableLattices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80A80EA6836FD57F">2.4-2 BasicOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80A80EA6836FD57F">2.4-3 BasicOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B21D84684A32CAC">2.4-4 ProjectiveIndecomposableForBasicOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X81E606D77BAFD83B">2.4-5 ProjectiveIndecomposableLatticesForBasicOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7EEF97F381D74420">2.4-6 GeneratorsForBasicOrder</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X8149E829843C9583">2.5 <span class="Heading">Computing with Lattices</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B623B467A8EAF58">2.5-1 AllLattices</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79620EF985031A25">2.5-2 AllLatticesInd</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79C753347B6257FB">2.5-3 IsomorphismRModules</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B2109F2873D555A">2.5-4 LatticeAlgorithm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D833ACE835B36F4">2.5-5 LatticesWithSimpleRadQuo</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801AB72B841DA58B">2.5-6 GlueUpNC</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X85D2A39F86F250F3">2.6 <span class="Heading">Basic Homological Algebra</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83257E2F7F8E0068">2.6-1 ProjectiveCover</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D58BC08870B8DAB">2.6-2 LiftHomomorphismNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B23D510794F451E">2.6-3 LiftHomomorphismToDirectSumNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8720150D824FA283">2.6-4 HellerTranslate</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FBAB232837856CA">2.6-5 HellerTranslateModular</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7C6B4235806BA0E9">2.7 <span class="Heading">Input/Output</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X862DBD84783F0CF6">2.7-1 PrintAsFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X866F4E7886604DCC">2.7-2 SaveAsFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79579D7B7BA0DD1F">2.7-3 SaveAsRecord</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X801F19247F5FF96C">2.7-4 ReadOrder</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82F06F3E7C01027B">2.7-5 ReadModule</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7BE4F15F78127B12">2.8 <span class="Heading">Symmetric Groups</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8704216079C88EF2">2.8-1 ZpSn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7E2A03CA7E6A7730">2.8-2 ZpSnWedderburnComponentsNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A2B1B1B8732CA08">2.8-3 NaturalSpechtRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A9AC27C7C5F06C6">2.8-4 PartitionAsString</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X869820BB7CEDAB7E">2.9 <span class="Heading">Experimental Functionality</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X792F17BA8110DDAE">2.9-1 SelfdualSuborders</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C58A90780B9708E">2.9-2 AreConjugate</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7880CD1F7F40DEDF">2.10 <span class="Heading">Pretty Output</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7AC57DA682D46286">2.10-1 PrintDecompositionMatrixAsLatex</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X794F5D34802E99EC">2.10-2 PrintBasisOfOrderAsMarkdown</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B77CC9287A8D6DA">2.10-3 JupyterDisplayDecompositionMatrix</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X858EC39F81ADB77F">2.11 <span class="Heading">Miscellaneous Other Functions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85E7705F8780EBC9">2.11-1 SpinningAlgorithmNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83CC7CF080ED97EE">2.11-2 UnFlattenMultiMatrixNC</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8138410E7C0258CA">2.11-3 DiagonalJoin</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8138410E7C0258CA">2.11-4 DiagonalJoin</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80D67BB67A509A56">2.11-5 Valuation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87614CA48493B63F">2.11-6 RightInverse</a></span>
+</div></div>
+</div>
+
+<h3>2 <span class="Heading">Provided Functions</span></h3>
+
+<p><a id="X868F7BAB7AC2EEBC" name="X868F7BAB7AC2EEBC"></a></p>
+
+<h4>2.1 <span class="Heading">Basics</span></h4>
+
+<p><a id="X856274FC87141FBD" name="X856274FC87141FBD"></a></p>
+
+<h5>2.1-1 ZpOrderByMultiMatrices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZpOrderByMultiMatrices</code>( <var class="Arg">p</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function creates an order over <span class="SimpleMath">Z_p</span> generated by the elements of <var class="Arg">gens</var>. <var class="Arg">gens</var> is supposed to be a list of lists of matrices with integer entries.</p>
+
+<p>It is highly recommended (and necessary for many functions), that you install endomorphism rings for the irreducible lattices after defining an order. See Section <a href="chap2.html#X817014A9873DB92E"><span class="RefLink">2.2</span></a> for details.</p>
+
+<p><a id="X7D425D657F5F2B5F" name="X7D425D657F5F2B5F"></a></p>
+
+<h5>2.1-2 IrreducibleLattices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IrreducibleLattices</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This returns list of irreducible lattices, one for each Wedderburn component. (Note that you have fixed an ordering of the Wedderburn components upon creation of <var class="Arg">lambda</var>. This ordering will be used here.)</p>
+
+<p><a id="X7C61261F7C5E53B8" name="X7C61261F7C5E53B8"></a></p>
+
+<h5>2.1-3 SimpleModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleModules</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns a list containing the simple modules of the order <var class="Arg">lambda</var>. Once called, the ordering of the simple modules will remain fixed.</p>
+
+<p><a id="X84701640811D2345" name="X84701640811D2345"></a></p>
+
+<h5>2.1-4 DecompositionMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecompositionMatrix</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Return the decomposition matrix of the order <var class="Arg">lambda</var>. Rows are sorted as <code class="func">IrreducibleLattices</code> (<a href="chap2.html#X7D425D657F5F2B5F"><span class="RefLink">2.1-2</span></a>), columns as <code class="func">SimpleModules</code> (<a href="chap2.html#X7C61261F7C5E53B8"><span class="RefLink">2.1-3</span></a>).</p>
+
+<p><a id="X7B131FA581D6F41C" name="X7B131FA581D6F41C"></a></p>
+
+<h5>2.1-5 NameSimpleModulesByDims</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameSimpleModulesByDims</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Gives the simple modules of <var class="Arg">lambda</var> names according to their dimension (constisting of the dimension and some dashes to make the names unique). The names will (for instance) be carried over to a basic algebra by <code class="func">BasicOrder</code> (<a href="chap2.html#X80A80EA6836FD57F"><span class="RefLink">2.4-3</span></a>).</p>
+
+<p><a id="X7858621880AACFC9" name="X7858621880AACFC9"></a></p>
+
+<h5>2.1-6 NameSimpleModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameSimpleModules</code>( <var class="Arg">lambda</var>, <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list of strings of the same length as <code class="code">SimpleModules(<var class="Arg">lambda</var>)</code>. This will assign names to the simple modules of <var class="Arg">lambda</var> accordingly.</p>
+
+<p><a id="X7D6D80837D5BAE4B" name="X7D6D80837D5BAE4B"></a></p>
+
+<h5>2.1-7 SimpleNames</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleNames</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns a list containing the names of the simple modules of <var class="Arg">lambda</var>. If no names are set, this will produce an error.</p>
+
+<p><a id="X823D95757CCF12A8" name="X823D95757CCF12A8"></a></p>
+
+<h5>2.1-8 NameWedderburnComponentsByDims</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameWedderburnComponentsByDims</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Gives the Wedderburn components of <var class="Arg">lambda</var> names according to their dimension (constisting of the dimension of the corresponding <span class="SimpleMath">Q_p⊗Λ</span>-module and some dashes to make the names unique). The names will (for instance) be carried over to a basic algebra by <code class="func">BasicOrder</code> (<a href="chap2.html#X80A80EA6836FD57F"><span class="RefLink">2.4-3</span></a>)..</p>
+
+<p><a id="X84135ED17EDAB54C" name="X84135ED17EDAB54C"></a></p>
+
+<h5>2.1-9 NameWedderburnComponents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameWedderburnComponents</code>( <var class="Arg">lambda</var>, <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list of strings of the same length as <code class="code">IrreducibleLattices(<var class="Arg">lambda</var>)</code>. This will assign names to the Wedderburn components modules of <var class="Arg">lambda</var> accordingly.</p>
+
+<p><a id="X85361C2087965A86" name="X85361C2087965A86"></a></p>
+
+<h5>2.1-10 ComponentNames</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentNames</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns a list containing the names of the Wedderburn components of <var class="Arg">lambda</var>. If no names are set, this will produce an error.</p>
+
+<p><a id="X861A1E2B834F862A" name="X861A1E2B834F862A"></a></p>
+
+<h5>2.1-11 DirectSumOfOrders</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectSumOfOrders</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list of orders. This will return the direct sum of those orders.</p>
+
+<p><a id="X861A1E2B834F862A" name="X861A1E2B834F862A"></a></p>
+
+<h5>2.1-12 DirectSumOfOrders</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectSumOfOrders</code>( <var class="Arg">lambda1</var>, <var class="Arg">lambda2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>As above, for just two orders.</p>
+
+<p><a id="X780C417B7C94AB50" name="X780C417B7C94AB50"></a></p>
+
+<h5>2.1-13 BlocksOfZpOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlocksOfZpOrder</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This method will return a list of lists of integers. Each list of integers corresponds to a block of <span class="SimpleMath">Λ</span>, the integers indexing the Wedderburn components belonging to that block.</p>
+
+<p><a id="X7BF4A4AC868C59DA" name="X7BF4A4AC868C59DA"></a></p>
+
+<h5>2.1-14 ExtractWedderburnComponents</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtractWedderburnComponents</code>( <var class="Arg">lambda</var>, <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given a list of integers in <var class="Arg">lst</var> indexing Wedderburn componnents, this method will calculate the projection of <span class="SimpleMath">Λ</span> onto those components (simply by projecting the generators). Information on simple and ordinary representations (if present) will be carried over to the order that is returned.</p>
+
+<p><a id="X7D266110849A590E" name="X7D266110849A590E"></a></p>
+
+<h5>2.1-15 RModuleOverZpOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RModuleOverZpOrder</code>( <var class="Arg">lambda</var>, <var class="Arg">rep</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This method is used to create modules from representations. <var class="Arg">lambda</var> is supposed to be an order, and <var class="Arg">rep</var> the images of the generators of <var class="Arg">lambda</var> in either <span class="SimpleMath">F_p^n× n</span> or <span class="SimpleMath">Z^n× n ⊂ Z_p^n× n</span>, i. e. <var class="Arg">rep</var> is a list of matrices. This method returns the corresponding module.</p>
+
+<p><a id="X7876438B86F89DBE" name="X7876438B86F89DBE"></a></p>
+
+<h5>2.1-16 ZeroRModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroRModule</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns the zero-module over the order <var class="Arg">lambda</var>.</p>
+
+<p><a id="X7E6926C6850E7C4E" name="X7E6926C6850E7C4E"></a></p>
+
+<h5>2.1-17 Dimension</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns the dimension of the module <var class="Arg">M</var>.</p>
+
+<p><a id="X7BD5B55C802805B4" name="X7BD5B55C802805B4"></a></p>
+
+<h5>2.1-18 Generators</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Generators</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This returns the generators of <var class="Arg">lambda</var> (i. e. a list of lists of matrices, representing elements in the Wedderburn decomposition).</p>
+
+<p><a id="X7884D657865C7D03" name="X7884D657865C7D03"></a></p>
+
+<h5>2.1-19 Rep</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rep</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> is supposed to be a (non-zero) module defined over an order <span class="SimpleMath">Λ</span>. This method returns the images of the generators <span class="SimpleMath">Λ</span> under the representation associated to <var class="Arg">M</var>.</p>
+
+<p><a id="X81F4814E83269C82" name="X81F4814E83269C82"></a></p>
+
+<h5>2.1-20 ReduceModP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceModP</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> is supposed to be a module. This returns <span class="SimpleMath">M/pM</span>.</p>
+
+<p><a id="X8133D3468687AD8B" name="X8133D3468687AD8B"></a></p>
+
+<h5>2.1-21 SubmoduleByBasisNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubmoduleByBasisNC</code>( <var class="Arg">M</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given a module <var class="Arg">M</var> of dimension <span class="SimpleMath">n</span> and an <span class="SimpleMath">n× n</span> matrix <var class="Arg">B</var> whose rowspace is a submodule of <var class="Arg">M</var> (this is not checked), this method will return the corresponding submodule (as a module in the sense of this package).</p>
+
+<p><a id="X7ED27D2485D61669" name="X7ED27D2485D61669"></a></p>
+
+<h5>2.1-22 MaximalSubmoduleBases</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubmoduleBases</code>( <var class="Arg">M</var>[, <var class="Arg">S</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>If <var class="Arg">S</var> is not specified, this will return a list consisting of tuples <code class="code">[B,T]</code> (one for every maximal submodule of <var class="Arg">M</var>), where <code class="code">B</code> is a basis matrix for a maximal submodule <span class="SimpleMath">N</span> of <var class="Arg">M</var>, and <code class="code">T</code> is a simple module isomorphic to the quotient <span class="SimpleMath"><var class="Arg">M</var>/N</span>.</p>
+
+<p>If <var class="Arg">S</var> is given (a simple module is expected here), this will return a list of basis matrices for all maximal submodules <span class="SimpleMath">N</span> with <span class="SimpleMath"><var class="Arg">M</var>/N ≅ <var class="Arg">S</var></span>.</p>
+
+<p>Whenever the zero module is a maximal submodule, its basis matrix will be given by an empty list.</p>
+
+<p><a id="X83982AF587B1B130" name="X83982AF587B1B130"></a></p>
+
+<h5>2.1-23 MaximalSubmoduleBasesMTX</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubmoduleBasesMTX</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This returns a list of bases of all maximal submodules of the module <var class="Arg">M</var> using the <strong class="pkg">MeatAxe</strong> that comes with <strong class="pkg">GAP</strong>. This will only work if the generators of <span class="SimpleMath">Λ</span> act as automorphisms on <var class="Arg">M</var>. Unsing this function is therefore not recommended, use <code class="func">MaximalSubmoduleBases</code> (<a href="chap2.html#X7ED27D2485D61669"><span class="RefLink">2.1-22</span></a>) instead.</p>
+
+<p><a id="X7E3FE8F883A5A3B8" name="X7E3FE8F883A5A3B8"></a></p>
+
+<h5>2.1-24 MaximalSubmodules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalSubmodules</code>( <var class="Arg">M</var>[, <var class="Arg">S</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Like <code class="func">MaximalSubmoduleBases</code> (<a href="chap2.html#X7ED27D2485D61669"><span class="RefLink">2.1-22</span></a>), but instead of basis matrices, this function will return modules in the sense of this package.</p>
+
+<p><a id="X80015C78876B4F1E" name="X80015C78876B4F1E"></a></p>
+
+<h5>2.1-25 Hom</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Hom</code>( <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Calculates a basis for the homomorphism space between the modules <var class="Arg">M</var> and <var class="Arg">N</var>. As any module in this package is canonically embedded in either some <span class="SimpleMath">Z_p^1× n</span> or some <span class="SimpleMath">F_p^1× n</span>, this method will always return a list of matrices either defined over the integers or over <code class="code">GF(p)</code>.</p>
+
+<p><a id="X80037271826B2FF8" name="X80037271826B2FF8"></a></p>
+
+<h5>2.1-26 HomToSimpleNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomToSimpleNC</code>( <var class="Arg">M</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This is basically equivalent to <code class="func">Hom</code> (<a href="chap2.html#X80015C78876B4F1E"><span class="RefLink">2.1-25</span></a>), but it is assumed that <var class="Arg">S</var> is simple. This function uses the built-in <strong class="pkg">MeatAxe</strong> of <strong class="pkg">GAP</strong>, rendering it much faster than <code class="func">Hom</code> (<a href="chap2.html#X80015C78876B4F1E"><span class="RefLink">2.1-25</span></a>).</p>
+
+<p><a id="X81C93A707C017CF4" name="X81C93A707C017CF4"></a></p>
+
+<h5>2.1-27 HomForLattices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomForLattices</code>( <var class="Arg">M</var>, <var class="Arg">N</var>, <var class="Arg">opt</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> and <var class="Arg">N</var> are supposed to be lattices defined over an order <code class="code">lambda</code>. <var class="Arg">opt</var> is supposed to be one of <code class="code">[ ]</code> (useless), <code class="code">[ 1 ]</code> <code class="code">[ 2 ]</code> or <code class="code">[ 1, 2 ]</code> (although the ordering of the list is irrelevant). This function computes a basis of <span class="SimpleMath">Hom(<var class="Arg">M</var>,<var class="Arg">N</var>)</span> and will return a list containing the following:</p>
+
+
+<ul>
+<li><p>If <span class="SimpleMath">1in<var class="Arg">opt</var></span>: A basis of <span class="SimpleMath">Hom(M,N)</span>, as it would be returned by <code class="func">Hom</code> (<a href="chap2.html#X80015C78876B4F1E"><span class="RefLink">2.1-25</span></a>).</p>
+
+</li>
+<li><p>If <span class="SimpleMath">2in<var class="Arg">opt</var></span>: A basis of <span class="SimpleMath">Hom(M,N)</span> embedded in</p>
+
+<p class="pcenter">
+								\bigoplus_{i} \textrm{End}_{\mathbb{Q}_p\otimes \Lambda}(\mathbb{Q}_p\otimes L_i)^{m_i\times n_i}
+							</p>
+
+<p>where <span class="SimpleMath">L_i</span> is the <span class="SimpleMath">i</span>-th irreducible lattice of the order <span class="SimpleMath">Λ</span> (over which <var class="Arg">M</var> and <var class="Arg">N</var> are defined), as returned by <code class="func">IrreducibleLattices</code> (<a href="chap2.html#X7D425D657F5F2B5F"><span class="RefLink">2.1-2</span></a>). The elements of <span class="SimpleMath">End_Q_p⊗ Λ(Q_p⊗ L_i)</span> are given by a (fixed) representation in some matrix ring over <span class="SimpleMath">Q_p</span>. <span class="SimpleMath">m_i</span> resp. <span class="SimpleMath">n_i</span> denote the multiplicity of <span class="SimpleMath">Q_p⊗ L_i</span> as a summand of <span class="SimpleMath">Q_p⊗ M</span> resp. <span class="SimpleMath">Q_p⊗ N</span>.</p>
+
+</li>
+</ul>
+<p>This function requires that some additional information about the lattices is known, namely an embedding into a direct sum of irreducible lattices, as well as the endomorphism rings of the latter (which is usually the case). If <span class="SimpleMath">1in<var class="Arg">opt</var></span>, you may check that this information is present via <code class="code">IsBound(M!.embedding_into_irr_lats)</code> and <code class="code">IsBound(M!.order!.Qp_end_bases)</code>. If <span class="SimpleMath">2in<var class="Arg">opt</var></span> we additionally require <code class="code">IsBound(M!.Qp_end_bases_smallmats)</code>.</p>
+
+<p><a id="X7E44920683157DE2" name="X7E44920683157DE2"></a></p>
+
+<h5>2.1-28 RadicalOfModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RadicalOfModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns a tuple <code class="code">[R, v]</code>, where <code class="code">R</code> is a module isomorphic to <span class="SimpleMath">Rad(<var class="Arg">M</var>)</span>. <code class="code">v</code> will be a list of non-negative integers, each <code class="code">v[i]</code> indicating the multiplicity of <code class="code">SimpleModules(...)[i]</code> in <span class="SimpleMath"><var class="Arg">M</var>/Rad(<var class="Arg">M</var>)</span></p>
+
+<p><a id="X84F41D288028219F" name="X84F41D288028219F"></a></p>
+
+<h5>2.1-29 TopEpimorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TopEpimorphism</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> is supposed to be a module. This returns a tuple <span class="SimpleMath">[Q,ϕ,v,h]</span>, where <span class="SimpleMath">Q</span> is a module isomorphic to <span class="SimpleMath"><var class="Arg">M</var> / Rad <var class="Arg">M</var></span> and <span class="SimpleMath">ϕ: M → Q</span> is an epimorphism. Furthermore <span class="SimpleMath">v</span> is a list of the multiplicities of the different simple modules in <span class="SimpleMath">Q</span>. <span class="SimpleMath">h</span> is a list of <span class="SimpleMath">End(S)</span>-bases of <span class="SimpleMath">Hom(M, S)</span> (for all simple modules <span class="SimpleMath">S</span>).</p>
+
+<p><a id="X7929281B848A9FBE" name="X7929281B848A9FBE"></a></p>
+
+<h5>2.1-30 RadicalSeries</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RadicalSeries</code>( <var class="Arg">M</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Calculates the first <var class="Arg">k</var> radical layers of <var class="Arg">M</var>. Returns a matrix <code class="code">X</code> such that <code class="code">X[j][i]</code> is equal to the multiplicity of <code class="code">SimpleModules(...)[i]</code> in <span class="SimpleMath">Rad^j-1(M)/Rad^j(M)</span></p>
+
+<p><a id="X78E0861E7CEE3540" name="X78E0861E7CEE3540"></a></p>
+
+<h5>2.1-31 GramMatrixOfTrace</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GramMatrixOfTrace</code>( <var class="Arg">lambda</var>, <var class="Arg">u</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">u</var> is supposed to be a list of rationals, the same numer of entries as <var class="Arg">lambda</var> has Wedderburn components (i. e. <var class="Arg">u</var> represents an element in <span class="SimpleMath">Z(Q_potimes<var class="Arg">lambda</var>)</span>). Return the Gram-matrix of <var class="Arg">lambda</var> with respect to the trace bilinear form <span class="SimpleMath">T_<var class="Arg">u</var>: (a,b)↦ tr(<var class="Arg">u</var>ab)</span> and the basis of <var class="Arg">lambda</var> returned by <code class="func">Generators</code> (<a href="chap2.html#X7BD5B55C802805B4"><span class="RefLink">2.1-18</span></a>).</p>
+
+<p><a id="X817014A9873DB92E" name="X817014A9873DB92E"></a></p>
+
+<h4>2.2 <span class="Heading">Endomorphism Rings of the Irreducible Lattices</span></h4>
+
+<p>Many functions in this package require that the endomorphism rings of the irreducible lattices of an order are known. Unfortunately, at this point we cannot effectively compute these in <strong class="pkg">GAP</strong>.</p>
+
+<p><a id="X8661E79280CE7F4A" name="X8661E79280CE7F4A"></a></p>
+
+<h5>2.2-1 InstallTrivialEndomorphismRings</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallTrivialEndomorphismRings</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Call this function if you <em>know</em> that <span class="SimpleMath">Q_p</span> is a splittiong field for <span class="SimpleMath">Q_potimes<var class="Arg">lambda</var></span></p>
+
+<p><a id="X7E720E8785EAFC01" name="X7E720E8785EAFC01"></a></p>
+
+<h5>2.2-2 InstallEndomorphismRingsNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallEndomorphismRingsNC</code>( <var class="Arg">lambda</var>, <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list of bases of endomorphism rings (i. e. a list of lists of matrices). You may for instance call <code class="code">InstallEndomorphismRingsNC(lambda, List(IrreducibleLattices(lambda), L -&gt; Hom(L,L)))</code> to compute the endomorphism rings in <strong class="pkg">GAP</strong> itself (this will however be horribly slow and excessive in memory usage).</p>
+
+<p><a id="X841431788064377A" name="X841431788064377A"></a></p>
+
+<h5>2.2-3 CalculateEndomorphismRingsByReynoldsNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CalculateEndomorphismRingsByReynoldsNC</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This calculates endomorphism rings using the Reynolds <code class="func">HomByReynoldsNC</code> (<span class="RefLink">???</span>). This only works if the generators of <code class="code">lambda</code> generate a finite group (e.g. if <code class="code">lambda</code> is a group algebra).</p>
+
+<p><a id="X7A89BE64821A10B2" name="X7A89BE64821A10B2"></a></p>
+
+<h5>2.2-4 CalculateEndomorphismRingsWithMAGMA</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CalculateEndomorphismRingsWithMAGMA</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This calculates endomorphism rings using <strong class="pkg">MAGMA</strong>. Use <code class="func">SetMAGMAExecutable</code> (<a href="chap2.html#X79BE448978FB33C9"><span class="RefLink">2.2-5</span></a>) to specify the location of the <strong class="pkg">MAGMA</strong>-executable on your system.</p>
+
+<p><a id="X79BE448978FB33C9" name="X79BE448978FB33C9"></a></p>
+
+<h5>2.2-5 SetMAGMAExecutable</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetMAGMAExecutable</code>( <var class="Arg">cmd</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Use <code class="code">cmd</code> to run <strong class="pkg">MAGMA</strong>.</p>
+
+<p><a id="X84199ABF87A5579B" name="X84199ABF87A5579B"></a></p>
+
+<h5>2.2-6 SetDebugOutput</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetDebugOutput</code>( <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><code class="code">b</code> is expected to be a boolean. This turn debugging output on or off (as some computations take a long time, it can be useful to have some indication of how the computation is progressing).</p>
+
+<p><a id="X861303627B2C81AA" name="X861303627B2C81AA"></a></p>
+
+<h4>2.3 <span class="Heading">Condensation for Group Algebras</span></h4>
+
+<p>It is assumed throughout this section that the order <span class="SimpleMath">Λ</span> we are dealing with is a group algebra (or a block of) <span class="SimpleMath">Z_p G</span> for some finite group <span class="SimpleMath">G</span>. It is furthermore assumed that the generators of <span class="SimpleMath">Λ</span> are elements of <span class="SimpleMath">G</span>.</p>
+
+<p><a id="X86812D218426AE41" name="X86812D218426AE41"></a></p>
+
+<h5>2.3-1 CondensationData</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondensationData</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">chi</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">H</var> is supposed to be a <span class="SimpleMath">p'</span>-subgroup of <var class="Arg">G</var>. <var class="Arg">chi</var> is supposed to be a linear (i. e. one-dimensional) character of <var class="Arg">H</var>. If <var class="Arg">chi</var> is not given, it will be taken as the trivial character. This method then computes a condensation idempotent <span class="SimpleMath">e_χ</span> belonging to the pair <span class="SimpleMath">(H,χ)</span> and a generating system for <span class="SimpleMath">e_χ Z_p G e_χ</span> (cf. <a href="chapBib.html#biBNoeske">[Noe05]</a>).</p>
+
+<p><a id="X82C92CA486A7E6A6" name="X82C92CA486A7E6A6"></a></p>
+
+<h5>2.3-2 CondenseGroupRingNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondenseGroupRingNC</code>( <var class="Arg">lambda</var>[, <var class="Arg">gens</var>], <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns an order that is a condensation of <var class="Arg">lambda</var> with respect to the condensation idempotent and system of generators fixed in <var class="Arg">data</var>. <var class="Arg">data</var> should have been fixed via <code class="code">CondensationData(...)</code>. The argument <var class="Arg">gens</var> should contain the images of the generators of <span class="SimpleMath">G</span> (as returned by <code class="code">GeneratorsOfGroup(G)</code>) in <span class="SimpleMath">Λ</span> (i. e., <var class="Arg">gens</var> will be a list of lists of matrices). If <var class="Arg">gens</var> is not provided, it will be assumed that the images will be the generators of <span class="SimpleMath">Λ</span> in the same order as they were given upon creation of <var class="Arg">lambda</var>.</p>
+
+<p><a id="X852E219286128859" name="X852E219286128859"></a></p>
+
+<h5>2.3-3 CondensationProperties</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondensationProperties</code>( <var class="Arg">lambda</var>[, <var class="Arg">gens</var>], <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This function is analogous to <code class="func">CondenseGroupRingNC</code> (<a href="chap2.html#X82C92CA486A7E6A6"><span class="RefLink">2.3-2</span></a>), except that it actually just calculates which simple torsion-modules and which irreducible ordinary representations are annihilated by the selected condensation idempotent. You may use this to check wether the condensation will be faithful.</p>
+
+<p><a id="X7A54F9257C8616E3" name="X7A54F9257C8616E3"></a></p>
+
+<h5>2.3-4 CondenseMatricesNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondenseMatricesNC</code>( <var class="Arg">Ggens</var>, <var class="Arg">Greps</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">Ggens</var> is supposed to be a list of generators of a group <span class="SimpleMath">G</span>, <var class="Arg">Greps</var> is supposed to be a list of matrices (defined over the integers) of the same length as <var class="Arg">Ggens</var>. The first to arguments should define a representation of the group in question, i. e., the map sending <code class="code"><var class="Arg">Ggens</var>[i]</code> to <code class="code"><var class="Arg">Greps</var>[i]</code> extends to a representation of <span class="SimpleMath">G</span>. <var class="Arg">data</var> is supposed to be a record generated by <code class="func">CondensationData</code> (<a href="chap2.html#X86812D218426AE41"><span class="RefLink">2.3-1</span></a>). This will return a list <code class="code">[cgens, base, baseR]</code>. <code class="code">cgens</code> will contain the images of the generators of the condesed algebra (as fixed in <var class="Arg">data</var>) under the condensed representation. <code class="code">base</code> will be an embedding of the condensed representation into the uncondensed, and <code class="code">baseR</code> will be a right inverse of <code class="code">base</code>.</p>
+
+<p><a id="X877AC25E7F9A8F9F" name="X877AC25E7F9A8F9F"></a></p>
+
+<h5>2.3-5 CondenseMatricesWithEvalMapNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondenseMatricesWithEvalMapNC</code>( <var class="Arg">hom</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Just like <code class="func">CondenseMatricesNC</code> (<a href="chap2.html#X7A54F9257C8616E3"><span class="RefLink">2.3-4</span></a>), but instead of the arguments <code class="code">Ggens</code> and <code class="code">Greps</code> you specify a function <var class="Arg">hom</var> which will return for any element in the group its image under the representation you wish to condense.</p>
+
+<p><a id="X7BE15B3B82139138" name="X7BE15B3B82139138"></a></p>
+
+<h5>2.3-6 CondenseTorsionRepNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CondenseTorsionRepNC</code>( <var class="Arg">Ggens</var>, <var class="Arg">Greps</var>, <var class="Arg">p</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Just like <code class="func">CondenseMatricesNC</code> (<a href="chap2.html#X7A54F9257C8616E3"><span class="RefLink">2.3-4</span></a>), but for <var class="Arg">p</var>-modular representations instead of integral ones.</p>
+
+<p><a id="X7A802E898553AA42" name="X7A802E898553AA42"></a></p>
+
+<h4>2.4 <span class="Heading">Projective Modules &amp; Basic Algebras</span></h4>
+
+<p><a id="X7C656E4F85EA55BB" name="X7C656E4F85EA55BB"></a></p>
+
+<h5>2.4-1 ProjectiveIndecomposableLattices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveIndecomposableLattices</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Calculates the projective indecomposable lattices for <var class="Arg">lambda</var>. It will return a list cof tuples, where the first entry is a projective indecomposable lattice, and the second one a simple torsion module (its head). Depending on the dimensions of the projective indecomposables, running this method may take some time.</p>
+
+<p><a id="X80A80EA6836FD57F" name="X80A80EA6836FD57F"></a></p>
+
+<h5>2.4-2 BasicOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasicOrder</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This calculates a basic algebra for <var class="Arg">lambda</var>. This method calls <code class="func">ProjectiveIndecomposableLattices</code> (<a href="chap2.html#X7C656E4F85EA55BB"><span class="RefLink">2.4-1</span></a>), and thus may take some time. The generators of the result will form a basis of the order. Names given to the simple modules and Wedderburn components will be carried over accordingly.</p>
+
+<p><a id="X80A80EA6836FD57F" name="X80A80EA6836FD57F"></a></p>
+
+<h5>2.4-3 BasicOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasicOrder</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> should be a list of projective indecomposable lattices. It will return an order isomorphic to</p>
+
+<p class="pcenter">
+						\bigoplus_{P, Q \in <var class="Arg">lst</var>} \textrm{Hom}(P, Q)
+					</p>
+
+<p>and carry over names accrodingly. If <var class="Arg">lst</var> is a list of all projective indecomposables, this is just equivalent to <code class="code">BasicOrder(lambda)</code>.</p>
+
+<p><a id="X7B21D84684A32CAC" name="X7B21D84684A32CAC"></a></p>
+
+<h5>2.4-4 ProjectiveIndecomposableForBasicOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveIndecomposableForBasicOrder</code>( <var class="Arg">lambda</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This will construct the projective indecomposable lattive with head <code class="code">SimpleModules(<var class="Arg">lambda</var>)[k]</code>. This method just uses (in contrast to <code class="func">ProjectiveIndecomposableLattices</code> (<a href="chap2.html#X7C656E4F85EA55BB"><span class="RefLink">2.4-1</span></a>)) the regular representation of <var class="Arg">lambda</var>. <var class="Arg">lambda</var> should be an order constructed via <code class="func">BasicOrder</code> (<a href="chap2.html#X80A80EA6836FD57F"><span class="RefLink">2.4-3</span></a>) (this is not checked though).</p>
+
+<p><a id="X81E606D77BAFD83B" name="X81E606D77BAFD83B"></a></p>
+
+<h5>2.4-5 ProjectiveIndecomposableLatticesForBasicOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveIndecomposableLatticesForBasicOrder</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This behaves like <code class="func">ProjectiveIndecomposableLattices</code> (<a href="chap2.html#X7C656E4F85EA55BB"><span class="RefLink">2.4-1</span></a>), but will make use of <code class="func">ProjectiveIndecomposableForBasicOrder</code> (<a href="chap2.html#X7B21D84684A32CAC"><span class="RefLink">2.4-4</span></a>). In particular, <var class="Arg">lambda</var> should be an order constructed via <code class="func">BasicOrder</code> (<a href="chap2.html#X80A80EA6836FD57F"><span class="RefLink">2.4-3</span></a>).</p>
+
+<p><a id="X7EEF97F381D74420" name="X7EEF97F381D74420"></a></p>
+
+<h5>2.4-6 GeneratorsForBasicOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsForBasicOrder</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This will calculate a minimal (w.r.t. inclusion) generating system for <var class="Arg">lambda</var> (that will be preimages of a basis of <span class="SimpleMath">Λ/Jac(Λ)</span> and of a basis of <span class="SimpleMath">Jac(Λ)Jac^2(Λ)+pΛ</span>). <var class="Arg">lambda</var> should be an order constructed via <code class="func">BasicOrder</code> (<a href="chap2.html#X80A80EA6836FD57F"><span class="RefLink">2.4-3</span></a>) (this is not checked though). This method returns a list consisting of an order and a function. The order will in the mathematical sense be equal to <var class="Arg">lambda</var>, but will have the calculated generating set as its set of generators. The function that is returned can be applied to modules defined over <var class="Arg">lambda</var>, and will return the same module defined over the order that was returned.</p>
+
+<p><a id="X8149E829843C9583" name="X8149E829843C9583"></a></p>
+
+<h4>2.5 <span class="Heading">Computing with Lattices</span></h4>
+
+<p><a id="X7B623B467A8EAF58" name="X7B623B467A8EAF58"></a></p>
+
+<h5>2.5-1 AllLattices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLattices</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>If <code class="code">L</code> is a lattice over an order, this function computes representatives for the isomorphism classes of full sublattices of <code class="code">L</code>, or, equivalently, for all lattices in the <span class="SimpleMath">Q_p</span>-span of <code class="code">L</code>.</p>
+
+<p><a id="X79620EF985031A25" name="X79620EF985031A25"></a></p>
+
+<h5>2.5-2 AllLatticesInd</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLatticesInd</code>( <var class="Arg">L1</var>, <var class="Arg">L2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>If <code class="code">L1</code> and <code class="code">L2</code> are lattices over the same order, this function computes representatives for the isomorphism classes of full sublattices of <code class="code">DirectSumOfModules(L1,L2)</code> whose projection down to <code class="code">L1</code> and <code class="code">L2</code> is all of <code class="code">L1</code> and <code class="code">L2</code>, respectively.</p>
+
+<p><a id="X79C753347B6257FB" name="X79C753347B6257FB"></a></p>
+
+<h5>2.5-3 IsomorphismRModules</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismRModules</code>( <var class="Arg">L1</var>, <var class="Arg">L2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>If <code class="code">L1</code> and <code class="code">L2</code> are lattices over the same order, this function returns an isomorpism between <code class="code">L1</code> and <code class="code">L2</code> if the two lattices are isomorphic, and <code class="code">fail</code> if they are not.</p>
+
+<p><a id="X7B2109F2873D555A" name="X7B2109F2873D555A"></a></p>
+
+<h5>2.5-4 LatticeAlgorithm</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeAlgorithm</code>( <var class="Arg">M</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> is supposed to be an irreducible lattice (this will not be checked, but if it is not irreducible, this function will not terminate) and <var class="Arg">b</var> should be a boolean. What is returned depends on <var class="Arg">b</var>:</p>
+
+
+<ul>
+<li><p><code class="code"><var class="Arg">b</var> = false</code>: In this case, this function calculates representatives (possibly with repetitions) of all isomorphism classes of irreducible lattices in <span class="SimpleMath">Q_p⊗ M</span>. It return a list of basis matrices for these as sublattices of <var class="Arg">M</var>.</p>
+
+</li>
+<li><p><code class="code"><var class="Arg">b</var> = true</code>: In this case, this function will return only representatives of lattices with simple top. The result will be a list of tuples, where the first entry is a basis matrix, and the second entry is a simple module (the top of the lattice).</p>
+
+</li>
+</ul>
+<p><a id="X7D833ACE835B36F4" name="X7D833ACE835B36F4"></a></p>
+
+<h5>2.5-5 LatticesWithSimpleRadQuo</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticesWithSimpleRadQuo</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var> is supposed to be an irreducible lattice. This returns representatives (possibly with repititions) of all irreducible lattices with simple top in <span class="SimpleMath">Q_p⊗ M</span>. It return a list of tuples, where the first entry is a lattice and the second one its top.</p>
+
+<p><a id="X801AB72B841DA58B" name="X801AB72B841DA58B"></a></p>
+
+<h5>2.5-6 GlueUpNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GlueUpNC</code>( <var class="Arg">P</var>, <var class="Arg">Q</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">P</var> and <var class="Arg">Q</var> are supposed to be lattices, and <var class="Arg">S</var> is supposed to be a simple module. Under the assumption that <var class="Arg">P</var> and <var class="Arg">Q</var> both have simple top isomorphic to <var class="Arg">S</var> and furthermore <var class="Arg">P</var> and <var class="Arg">Q</var> have no non-zero common <span class="SimpleMath">Z_p</span>-torsionfree image this method will return a (full) lattice with simple top <var class="Arg">S</var> in <span class="SimpleMath"><var class="Arg">P</var>⊕ <var class="Arg">Q</var></span>. If the assumptions are not met, this method may not terminate.</p>
+
+<p><a id="X85D2A39F86F250F3" name="X85D2A39F86F250F3"></a></p>
+
+<h4>2.6 <span class="Heading">Basic Homological Algebra</span></h4>
+
+<p><a id="X83257E2F7F8E0068" name="X83257E2F7F8E0068"></a></p>
+
+<h5>2.6-1 ProjectiveCover</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveCover</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given the module <var class="Arg">M</var>, this returns a tuple <span class="SimpleMath">[P, ϕ]</span>. Here <span class="SimpleMath">P</span> is the projective cover of <var class="Arg">M</var>, and <span class="SimpleMath">ϕ</span> is an epimorphism <span class="SimpleMath">P → <var class="Arg">M</var></span>.</p>
+
+<p><a id="X7D58BC08870B8DAB" name="X7D58BC08870B8DAB"></a></p>
+
+<h5>2.6-2 LiftHomomorphismNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftHomomorphismNC</code>( <var class="Arg">M</var>, <var class="Arg">phi</var>, <var class="Arg">N</var>, <var class="Arg">psi</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">M</var>, <var class="Arg">N</var> and <var class="Arg">L</var> are supposed to be modules. <var class="Arg">phi</var> is supposed to be a homomorphism <span class="SimpleMath"><var class="Arg">M</var>rightarrow<var class="Arg">L</var></span>. <var class="Arg">psi</var> is supposed to be a homomorphism <span class="SimpleMath"><var class="Arg">N</var>rightarrow<var class="Arg">L</var></span>. This return a homomorphism <span class="SimpleMath">X: M → N</span> such that <span class="SimpleMath">X ⋅ <var class="Arg">psi</var> = <var class="Arg">phi</var></span>. If no such <span class="SimpleMath">X</span> exists, <code class="code">fail</code> is returned. Note that all homomorphisms are represented by matrices, and it is not checked wether the given matrices actually are homomorphisms.</p>
+
+<p><a id="X7B23D510794F451E" name="X7B23D510794F451E"></a></p>
+
+<h5>2.6-3 LiftHomomorphismToDirectSumNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftHomomorphismToDirectSumNC</code>( <var class="Arg">lst</var>, <var class="Arg">svec</var>, <var class="Arg">phi</var>, <var class="Arg">N</var>, <var class="Arg">psi</var>, <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list of lattices. <var class="Arg">svec</var> is supposed to be a list of indices. This is then equivalent to calling <code class="code">LiftHomomorphismNC(DirectSumOfModules(List(svec, i -&gt; lst[i])), phi, N, psi, L)</code> but it is actually a lot faster.</p>
+
+<p><a id="X8720150D824FA283" name="X8720150D824FA283"></a></p>
+
+<h5>2.6-4 HellerTranslate</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HellerTranslate</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given a module <var class="Arg">M</var>, this computes its Heller translate. Note that this is always going to return a lattice.</p>
+
+<p><a id="X7FBAB232837856CA" name="X7FBAB232837856CA"></a></p>
+
+<h5>2.6-5 HellerTranslateModular</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HellerTranslateModular</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given a torsion module <var class="Arg">M</var>, this computes its modular Heller translate. That is, the Heller translate in the module category of <span class="SimpleMath">F_p ⊗ Λ</span>, where <span class="SimpleMath">Λ</span> denotes the order over which <var class="Arg">M</var> is defined. Note that this is always going to return a torsion module.</p>
+
+<p><a id="X7C6B4235806BA0E9" name="X7C6B4235806BA0E9"></a></p>
+
+<h4>2.7 <span class="Heading">Input/Output</span></h4>
+
+<p><a id="X862DBD84783F0CF6" name="X862DBD84783F0CF6"></a></p>
+
+<h5>2.7-1 PrintAsFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintAsFunction</code>( <var class="Arg">X</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Outputs a function that will create the module or order <var class="Arg">X</var>. Usually you would use <code class="func">SaveAsFunction</code> (<a href="chap2.html#X866F4E7886604DCC"><span class="RefLink">2.7-2</span></a>) directly.</p>
+
+<p><a id="X866F4E7886604DCC" name="X866F4E7886604DCC"></a></p>
+
+<h5>2.7-2 SaveAsFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveAsFunction</code>( <var class="Arg">filename</var>, <var class="Arg">X</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Saves the module or order <var class="Arg">X</var> to the file <var class="Arg">filename</var> (which will be overwritten in case it exists). You can then read that file using <code class="func">ReadOrder</code> (<a href="chap2.html#X801F19247F5FF96C"><span class="RefLink">2.7-4</span></a>) or <code class="func">ReadModule</code> (<a href="chap2.html#X82F06F3E7C01027B"><span class="RefLink">2.7-5</span></a>).</p>
+
+<p><a id="X79579D7B7BA0DD1F" name="X79579D7B7BA0DD1F"></a></p>
+
+<h5>2.7-3 SaveAsRecord</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveAsRecord</code>( <var class="Arg">filename</var>, <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>This writes the order <var class="Arg">lambda</var> to the file <var class="Arg">filename</var> (which will be overwritten in case it exists). The file will then contain a <strong class="pkg">GAP</strong>-function that returns a record. The content of that file cannot be turned back into an order directly using this package, so usually you would want to use <code class="func">SaveAsFunction</code> (<a href="chap2.html#X866F4E7886604DCC"><span class="RefLink">2.7-2</span></a>). However, the advantage of <code class="func">SaveAsRecord</code> is that you do not need this package to read the file that it produces.</p>
+
+<p><a id="X801F19247F5FF96C" name="X801F19247F5FF96C"></a></p>
+
+<h5>2.7-4 ReadOrder</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadOrder</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns an order that is identical to the one that was written to <var class="Arg">filename</var> using <code class="func">SaveAsFunction</code> (<a href="chap2.html#X866F4E7886604DCC"><span class="RefLink">2.7-2</span></a>).</p>
+
+<p><a id="X82F06F3E7C01027B" name="X82F06F3E7C01027B"></a></p>
+
+<h5>2.7-5 ReadModule</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadModule</code>( <var class="Arg">filename</var>, <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns a module that is identical to the one that was written to <var class="Arg">filename</var> using <code class="func">SaveAsFunction</code> (<a href="chap2.html#X866F4E7886604DCC"><span class="RefLink">2.7-2</span></a>). That module will be defined over <var class="Arg">lambda</var> (so when you save a module be sure to always save the order over which it is defined as well).</p>
+
+<p><a id="X7BE4F15F78127B12" name="X7BE4F15F78127B12"></a></p>
+
+<h4>2.8 <span class="Heading">Symmetric Groups</span></h4>
+
+<p><a id="X8704216079C88EF2" name="X8704216079C88EF2"></a></p>
+
+<h5>2.8-1 ZpSn</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZpSn</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This returns the order <span class="SimpleMath">Z_p Σ_n</span>. The Wedderburn components are named by partitions, and sorted descending with respect to the lexicographical ordering. The simple modules are named after their dimensions (it will not be too hard to find the corresponding <var class="Arg">p</var>-regular partitions, though). The lattices returned by <code class="func">IrreducibleLattices</code> (<a href="chap2.html#X7D425D657F5F2B5F"><span class="RefLink">2.1-2</span></a>) will be the Specht lattices.</p>
+
+<p><a id="X7E2A03CA7E6A7730" name="X7E2A03CA7E6A7730"></a></p>
+
+<h5>2.8-2 ZpSnWedderburnComponentsNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZpSnWedderburnComponentsNC</code>( <var class="Arg">p</var>, <var class="Arg">part</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">part</var> is supposed to be a non-empty list of pairwise distinct partitions of the same number <span class="SimpleMath">n</span> (this will however not be checked). Returns the projection of <span class="SimpleMath">Z_p Σ_n</span> on the Wedderburn components labeled by the partitons in <var class="Arg">part</var>. Otherwise this behaves like <code class="func">ZpSn</code> (<a href="chap2.html#X8704216079C88EF2"><span class="RefLink">2.8-1</span></a>).</p>
+
+<p><a id="X7A2B1B1B8732CA08" name="X7A2B1B1B8732CA08"></a></p>
+
+<h5>2.8-3 NaturalSpechtRepresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalSpechtRepresentation</code>( <var class="Arg">lambda</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lambda</var> is supposed to be a partition of some positive integer <code class="code">n</code>. This function returns a group homomorphism from <code class="code">SymmetricGroup(n)</code> into a general linear group over the integers. To be more precise, this function implements Young's "natural" representation for the Specht module <span class="SimpleMath">S^λ</span>. See Example 25.2 in <a href="chapBib.html#biBJames">[Jam78]</a> for details.</p>
+
+<p><a id="X7A9AC27C7C5F06C6" name="X7A9AC27C7C5F06C6"></a></p>
+
+<h5>2.8-4 PartitionAsString</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartitionAsString</code>( <var class="Arg">mu</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given a partition <var class="Arg">mu</var>, this returns a string representing <var class="Arg">mu</var>. For instance <code class="code">PartitionAsString([3,2,1,1])</code> returns <code class="code">"(3,2,1^{2})"</code>.</p>
+
+<p><a id="X869820BB7CEDAB7E" name="X869820BB7CEDAB7E"></a></p>
+
+<h4>2.9 <span class="Heading">Experimental Functionality</span></h4>
+
+<p>The functions in this section are somewhat experimental and only work reasonably well in small examples. All functions in this section do furthermore require that the generators of the given orders form a basis.</p>
+
+<p><a id="X792F17BA8110DDAE" name="X792F17BA8110DDAE"></a></p>
+
+<h5>2.9-1 SelfdualSuborders</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelfdualSuborders</code>( <var class="Arg">lambda</var>, <var class="Arg">u</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given an element <span class="SimpleMath">u</span> in <span class="SimpleMath">Z(Q_potimes<var class="Arg">lambda</var>)</span>, this returns all (ismomorphism classes of) orders contained in <var class="Arg">lambda</var> that are selfdual with respect to the trace bilinear form <span class="SimpleMath">T_u</span> (same as in <code class="func">GramMatrixOfTrace</code> (<a href="chap2.html#X78E0861E7CEE3540"><span class="RefLink">2.1-31</span></a>)).</p>
+
+<p><a id="X7C58A90780B9708E" name="X7C58A90780B9708E"></a></p>
+
+<h5>2.9-2 AreConjugate</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AreConjugate</code>( <var class="Arg">lambda</var>, <var class="Arg">gamma</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Given two orders <var class="Arg">lambda</var> and <var class="Arg">gamma</var> in the same semisimple <span class="SimpleMath">Q_p</span>-algebra <span class="SimpleMath">A</span>, this decides wether the two are conjugate (or, equivalently, isomorphic as algebras over the center of <span class="SimpleMath">A</span>).</p>
+
+<p><a id="X7880CD1F7F40DEDF" name="X7880CD1F7F40DEDF"></a></p>
+
+<h4>2.10 <span class="Heading">Pretty Output</span></h4>
+
+<p><a id="X7AC57DA682D46286" name="X7AC57DA682D46286"></a></p>
+
+<h5>2.10-1 PrintDecompositionMatrixAsLatex</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintDecompositionMatrixAsLatex</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Given an order <code class="code">A</code>, this function prints the decomposition matrix of <code class="code">A</code> as <strong class="pkg">LaTeX</strong>-code (including information on names and dimensions of modules).</p>
+
+<p><a id="X794F5D34802E99EC" name="X794F5D34802E99EC"></a></p>
+
+<h5>2.10-2 PrintBasisOfOrderAsMarkdown</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintBasisOfOrderAsMarkdown</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Given a basic order <code class="code">A</code>, this function prints a basis of <code class="code">A</code> as <strong class="pkg">Jupyter</strong>-markdown code (can easily be turned into <strong class="pkg">LaTeX</strong>-code).</p>
+
+<p><a id="X7B77CC9287A8D6DA" name="X7B77CC9287A8D6DA"></a></p>
+
+<h5>2.10-3 JupyterDisplayDecompositionMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JupyterDisplayDecompositionMatrix</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JupyterDisplayBasisOfOrder</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JupyterDisplayMultiMatrix</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>If <strong class="pkg">GAP</strong> is run in a Jupyter notebook, this will render the respective objects in the notebook.</p>
+
+<p><a id="X858EC39F81ADB77F" name="X858EC39F81ADB77F"></a></p>
+
+<h4>2.11 <span class="Heading">Miscellaneous Other Functions</span></h4>
+
+<p><a id="X85E7705F8780EBC9" name="X85E7705F8780EBC9"></a></p>
+
+<h5>2.11-1 SpinningAlgorithmNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpinningAlgorithmNC</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Given a list <code class="code">lst</code> of rational square matrices that generate a <span class="SimpleMath">Z</span>-order, this function return a list <code class="code">ret</code> of integer square matrices such that <span class="SimpleMath">T^-1⋅ textttlst[i] ⋅ T = textttret[i] ∀ i</span> for an invertible rational matrix <span class="SimpleMath">T</span>.</p>
+
+<p><a id="X83CC7CF080ED97EE" name="X83CC7CF080ED97EE"></a></p>
+
+<h5>2.11-2 UnFlattenMultiMatrixNC</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnFlattenMultiMatrixNC</code>( <var class="Arg">lst</var>, <var class="Arg">dimvec</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>When <span class="SimpleMath">A=[A_1,...,A_k]</span> is a list of matrices of dimensions <span class="SimpleMath"><var class="Arg">dimvec</var>=[n_1,...,n_k]</span>, this method is inverse to <code class="code">Flat(...)</code>, i. e. <code class="code">UnFlattenMultiMatrixNC(Flat(A), dimvec) = A</code>.</p>
+
+<p><a id="X8138410E7C0258CA" name="X8138410E7C0258CA"></a></p>
+
+<h5>2.11-3 DiagonalJoin</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalJoin</code>( <var class="Arg">lst</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p><var class="Arg">lst</var> is supposed to be a list <span class="SimpleMath">[A_1,...,A_k]</span>, and the method returns <span class="SimpleMath">Diag(A_1,...,A_k)</span></p>
+
+<p><a id="X8138410E7C0258CA" name="X8138410E7C0258CA"></a></p>
+
+<h5>2.11-4 DiagonalJoin</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalJoin</code>( <var class="Arg">A</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>The same as above, for just two matrices.</p>
+
+<p><a id="X80D67BB67A509A56" name="X80D67BB67A509A56"></a></p>
+
+<h5>2.11-5 Valuation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Valuation</code>( <var class="Arg">r</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Returns the <var class="Arg">p</var>-valuation of the rational number <var class="Arg">r</var> (the built-in method in <strong class="pkg">GAP</strong> only covers integers).</p>
+
+<p><a id="X87614CA48493B63F" name="X87614CA48493B63F"></a></p>
+
+<h5>2.11-6 RightInverse</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightInverse</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>Computes a right inverse of the matrix <var class="Arg">M</var> (over <code class="code">DefaultFieldOfMatrix(M)</code>). If <var class="Arg">M</var> has no right inverse, it returns <code class="code">fail</code>.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chapBib.html">Bib</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

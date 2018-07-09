@@ -1,0 +1,130 @@
+  
+  
+                               [1XThe [5Xorders[105X Package[101X
+  
+  
+                                ( Version 1.0 )
+  
+  
+                                   July 2018
+  
+  
+                                 Florian Eisele
+  
+  
+  
+  Florian Eisele
+      Email:    [7Xmailto:florian.eisele@city.ac.uk[107X
+      Homepage: [7Xhttps://feisele.github.io[107X
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 2018 by Florian Eisele.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (orders)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YGeneral Design & Limitations of this Package[133X
+    1.2 [33X[0;0YBasic Data Structures[133X
+      1.2-1 [33X[0;0YIsZpOrder[133X
+      1.2-2 [33X[0;0YIsRModuleOverZpOrder[133X
+    1.3 [33X[0;0YExamples[133X
+  2 [33X[0;0YProvided Functions[133X
+    2.1 [33X[0;0YBasics[133X
+      2.1-1 ZpOrderByMultiMatrices
+      2.1-2 IrreducibleLattices
+      2.1-3 SimpleModules
+      2.1-4 DecompositionMatrix
+      2.1-5 NameSimpleModulesByDims
+      2.1-6 NameSimpleModules
+      2.1-7 SimpleNames
+      2.1-8 NameWedderburnComponentsByDims
+      2.1-9 NameWedderburnComponents
+      2.1-10 ComponentNames
+      2.1-11 DirectSumOfOrders
+      2.1-12 DirectSumOfOrders
+      2.1-13 BlocksOfZpOrder
+      2.1-14 ExtractWedderburnComponents
+      2.1-15 RModuleOverZpOrder
+      2.1-16 ZeroRModule
+      2.1-17 Dimension
+      2.1-18 Generators
+      2.1-19 Rep
+      2.1-20 ReduceModP
+      2.1-21 SubmoduleByBasisNC
+      2.1-22 MaximalSubmoduleBases
+      2.1-23 MaximalSubmoduleBasesMTX
+      2.1-24 MaximalSubmodules
+      2.1-25 Hom
+      2.1-26 HomToSimpleNC
+      2.1-27 HomForLattices
+      2.1-28 RadicalOfModule
+      2.1-29 TopEpimorphism
+      2.1-30 RadicalSeries
+      2.1-31 GramMatrixOfTrace
+    2.2 [33X[0;0YEndomorphism Rings of the Irreducible Lattices[133X
+      2.2-1 InstallTrivialEndomorphismRings
+      2.2-2 InstallEndomorphismRingsNC
+      2.2-3 CalculateEndomorphismRingsByReynoldsNC
+      2.2-4 CalculateEndomorphismRingsWithMAGMA
+      2.2-5 SetMAGMAExecutable
+      2.2-6 SetDebugOutput
+    2.3 [33X[0;0YCondensation for Group Algebras[133X
+      2.3-1 CondensationData
+      2.3-2 CondenseGroupRingNC
+      2.3-3 CondensationProperties
+      2.3-4 CondenseMatricesNC
+      2.3-5 CondenseMatricesWithEvalMapNC
+      2.3-6 CondenseTorsionRepNC
+    2.4 [33X[0;0YProjective Modules & Basic Algebras[133X
+      2.4-1 ProjectiveIndecomposableLattices
+      2.4-2 BasicOrder
+      2.4-3 BasicOrder
+      2.4-4 ProjectiveIndecomposableForBasicOrder
+      2.4-5 ProjectiveIndecomposableLatticesForBasicOrder
+      2.4-6 GeneratorsForBasicOrder
+    2.5 [33X[0;0YComputing with Lattices[133X
+      2.5-1 AllLattices
+      2.5-2 AllLatticesInd
+      2.5-3 IsomorphismRModules
+      2.5-4 LatticeAlgorithm
+      2.5-5 LatticesWithSimpleRadQuo
+      2.5-6 GlueUpNC
+    2.6 [33X[0;0YBasic Homological Algebra[133X
+      2.6-1 ProjectiveCover
+      2.6-2 LiftHomomorphismNC
+      2.6-3 LiftHomomorphismToDirectSumNC
+      2.6-4 HellerTranslate
+      2.6-5 HellerTranslateModular
+    2.7 [33X[0;0YInput/Output[133X
+      2.7-1 PrintAsFunction
+      2.7-2 SaveAsFunction
+      2.7-3 SaveAsRecord
+      2.7-4 ReadOrder
+      2.7-5 ReadModule
+    2.8 [33X[0;0YSymmetric Groups[133X
+      2.8-1 ZpSn
+      2.8-2 ZpSnWedderburnComponentsNC
+      2.8-3 NaturalSpechtRepresentation
+      2.8-4 PartitionAsString
+    2.9 [33X[0;0YExperimental Functionality[133X
+      2.9-1 SelfdualSuborders
+      2.9-2 AreConjugate
+    2.10 [33X[0;0YPretty Output[133X
+      2.10-1 PrintDecompositionMatrixAsLatex
+      2.10-2 PrintBasisOfOrderAsMarkdown
+      2.10-3 JupyterDisplayDecompositionMatrix
+    2.11 [33X[0;0YMiscellaneous Other Functions[133X
+      2.11-1 SpinningAlgorithmNC
+      2.11-2 UnFlattenMultiMatrixNC
+      2.11-3 DiagonalJoin
+      2.11-4 DiagonalJoin
+      2.11-5 Valuation
+      2.11-6 RightInverse
+  
+  
+  [32X

@@ -1,0 +1,128 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThe  [5Xorders[105X-package  deals  with  [22XZ_p[122X-orders [22XΛ[122X in semisimple [22XQ_p[122X-algebras [22XA[122X,
+  where  [22XZ_p[122X  denotes the [22Xp[122X-adic integers. Its original purpose was to compute
+  the  projective  indecomposable  lattices  of  such orders, and from those a
+  basic  algebra  of  [22XΛ[122X. In addition, the package offers some functionality to
+  deal  with  arbitrary  lattices  over  [22XΛ[122X.  In  particular,  it  can  compute
+  representatives for the isomorphism classes of all [22XΛ[122X-lattices inside a given
+  [22XA[122X-module  [22XV[122X,  compute  homomorphism spaces betwen lattices and check whether
+  two [22XΛ[122X-lattices [22XL_1[122X and [22XL_2[122X are isomorphic.[133X
+  
+  
+  [1X1.1 [33X[0;0YGeneral Design & Limitations of this Package[133X[101X
+  
+  [33X[0;0YAn order [22XΛ[122X can be created using the function [2XZpOrderByMultiMatrices[102X ([14X2.1-1[114X).
+  The following data needs to be specified:[133X
+  
+  [30X    [33X[0;6YA prime [22Xp[122X[133X
+  
+  [30X    [33X[0;6YA  list [22X[g_1,...,g_k][122X where each [22Xg_i[122X is a list of matrices over [22XZ[122X. The
+        list  [22Xg_i[122X  represents a generator of the order. More precisely, [22Xg_i[l][122X
+        is  supposed  to  be  the  image  of the [22Xi[122X-th generator under the [22Xl[122X-th
+        irreducible [22XQ_p[122X-representation of [22XQ_p ⊗ Λ[122X.[133X
+  
+  [33X[0;0YA few remarks are in order here:[133X
+  
+  [30X    [33X[0;6YWe  assume  that  we  know the Wedderburn decomposition of [22XQ_p⊗Λ[122X. When
+        dealing  with  group  algebras,  this  means  that we need to know the
+        irreducible  representations  of  the  group  over  [22XQ_p[122X,  which  is  a
+        non-trivial  problem. For group algebras of finite groups, we might be
+        able to use [10XIrreducibleRepresentations[110X, but there is no guarantee that
+        these  representations end up being defined over a small enough field.
+        The  condition  that  the  images  of the generators of [22XΛ[122X are integral
+        means  in  particular  that  we  single out one particular irreducible
+        lattice   as   a   "standard  lattice"  in  the  corresponding  simple
+        [22XQ_p⊗Λ[122X-module.  For  the  purposes  of  this package it does not matter
+        though which lattice we choose.[133X
+  
+  [30X    [33X[0;6YWhile  we  consider [22XA[122X as a [22XQ_p[122X-algebra, we actually ask for the images
+        of  the  generators of [22XA[122X under the irreducible representations of [22XA[122X to
+        be matrices over [22XQ[122X. In the case of group algebras of finite groups, it
+        often  happens  that  the  irreducible  representations  over  [22XQ[122X  stay
+        irreducible  over  [22XQ_p[122X, in which case we get generators of the desired
+        form.  Integral  spinning will the allow us to turn this collection of
+        matrices over the rationals into matrices over the integers.[133X
+  
+  [33X[0;0YNone  of  the issues mentioned above arise for [22XΛ= Z_p S_n[122X, where [22XS_n[122X denotes
+  the   symmetric   group   on  [22Xn[122X  letters.  Therefore  symmetric  groups  are
+  particularly  easy  amenable  to the methods in this package, and we provide
+  some functionality specific to symmetric groups.[133X
+  
+  [33X[0;0YOnce  we  have  defined an order in the sense of this package, we can define
+  modules  over  it.  This package supports modules that are either [22XΛ[122X-lattices
+  (i.  e.  free  as [22XZ_p[122X-modules) or [22Xp[122X-torsion modules (i. e. [22XF_p[122X-vector spaces
+  with  a  [22XΛ[122X-action).  Other  torsion  types  are  not  supported. Modules are
+  internally  represented  by the images of the generators [22Xg_1,...,g_k[122X of [22XΛ[122X in
+  some  matrix  ring.  For lattices we also store (if known) an embedding in a
+  direct sum of irreducible lattices.[133X
+  
+  
+  [1X1.2 [33X[0;0YBasic Data Structures[133X[101X
+  
+  [33X[0;0YThis  package  handles two types of objects: orders and modules over orders.
+  Although  you  can  define  modules  "by hand", the general idea is that you
+  define  an  order  (which  essentially  means  that  you  provide  a  set of
+  irreducible integral representations) and use the functions provided in this
+  package  to  construct  further  modules (e. g. simple modules, projectives,
+  radicals of modules) and homomorphism spaces between them.[133X
+  
+  
+  [1X1.2-1 [33X[0;0YIsZpOrder[133X[101X
+  
+  [33X[0;0YA  [22XZ_p[122X-order  in  a semisimple [22XQ_p[122X-algebra is represented by an oject in the
+  category    [10XIsZpOrder[110X.    You    may    create    such   an   object   using
+  [2XZpOrderByMultiMatrices[102X  ([14X2.1-1[114X). Such an object (representing an order [22XΛ[122X) is
+  used to store information about:[133X
+  
+  [30X    [33X[0;6YThe irreducible representations of [22XQ_p⊗Λ[122X.[133X
+  
+  [30X    [33X[0;6YThe  endomorphism rings of the irreducible lattices (these are crucial
+        for  efficient  computation).  At  present,  we  cannot  compute these
+        efficiently  in  [5XGAP[105X  itself,  unless  the  generators of [22XΛ[122X generate a
+        finite      group      (in      which      case     we     can     use
+        [2XCalculateEndomorphismRingsByReynoldsNC[102X  ([14X2.2-3[114X)). If you know that [22XQ_p[122X
+        is     a     splitting     field     for    [22XQ_p⊗Λ[122X    you    can    use
+        [2XInstallTrivialEndomorphismRings[102X  ([14X2.2-1[114X). If you have a recent version
+        of  [5XMagma[105X  available,  you  can  also compute these endomorphism rings
+        using   [2XCalculateEndomorphismRingsWithMAGMA[102X   ([14X2.2-4[114X).   If  you  have
+        calculated  these  endomorphism  rings  by  other  means,  you can use
+        [2XInstallEndomorphismRingsNC[102X ([14X2.2-2[114X) to install them.[133X
+  
+  [30X    [33X[0;6YThe simple modules and the decomposition matrix of [22XΛ[122X.[133X
+  
+  [33X[0;0YWhen we refer to an "order", we will always mean an object of this type.[133X
+  
+  
+  [1X1.2-2 [33X[0;0YIsRModuleOverZpOrder[133X[101X
+  
+  [33X[0;0YAn  object  on  the  category [10XIsRModuleOverZpOrder[110X represents a right module
+  over  an  order.  All  modules in this package are right modules, so we will
+  usually  just  call  them  modules.  Modules  are  represented  by  a linear
+  representation. The only exception is the zero module. This package supports
+  three types of modules:[133X
+  
+  [30X    [33X[0;6Y[13XLattices[113X:  Lattices  are  represented  by a linear representation over
+        [22XZ_p[122X.  For practical purposes the package does expect the images of the
+        generators  of  the  order over which the lattice is defined to lie in
+        [22XZ^n× n[122X (this constitutes no further theoretical restriction). Lattices
+        have  the property [10XIsRLatticeOverZpOrder[110X. Lattices in this package may
+        also  store  an  embedding  into a direct sum of irreducible lattices,
+        which   is   crucial   for  efficient  computation.  If  lattices  are
+        constructed from other lattices using functions from this package, the
+        functions  will  always  compute  and  store  such an embeding for all
+        lattices they create.[133X
+  
+  [30X    [33X[0;6Y[13X[22Xp[122X-torsion  modules[113X: These are given by the images of the generators of
+        the  order  in  some  matrix ring over [22XF_p[122X. [22Xp[122X-torsion modules have the
+        property [10XIsRModuleOverZpOrderModp[110X.[133X
+  
+  [30X    [33X[0;6Y[13XThe  zero  module[113X:  This  one  has the properties [10XIsZeroRModuleRep[110X and
+        [10XIsZero[110X.[133X
+  
+  
+  [1X1.3 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YAn example session can be found here. ([7Xexample.html[107X)[133X
+  

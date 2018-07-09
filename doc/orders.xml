@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Book System "gapdoc.dtd">
+
+<Book Name="orders">
+	<TitlePage>
+		<Title>The <Package>orders</Package> Package</Title>
+		<Version>( Version 1.0 )</Version>
+		<Date>July 2018</Date>
+		<Author>Florian Eisele <Email>florian.eisele@city.ac.uk</Email>
+			<Homepage>https://feisele.github.io</Homepage></Author>
+		<Copyright>&copyright; 2018 by Florian Eisele.</Copyright>
+	</TitlePage>
+	<TableOfContents/>
+	<Body>
+		<Chapter>
+			<Heading>Introduction</Heading>
+
+			The <Package>orders</Package>-package deals with
+			<M>\mathbb{Z}_p</M>-orders <M>\Lambda</M> in semisimple <M>\mathbb Q_p</M>-algebras <M>A</M>, where <M>\mathbb Z_p</M> denotes the
+			<M>p</M>-adic integers.
+			Its original purpose was to compute the projective indecomposable lattices of such orders, and from those
+			a basic algebra of <M>\Lambda</M>. In addition, the package offers some functionality to deal with
+			arbitrary lattices over <M>\Lambda</M>. In particular,
+			it can compute representatives for the isomorphism classes of all <M>\Lambda</M>-lattices inside a
+			given <M>A</M>-module <M>V</M>, compute homomorphism spaces betwen lattices and check whether two
+			<M>\Lambda</M>-lattices <M>L_1</M> and <M>L_2</M> are isomorphic.
+
+			<Section><Heading>General Design &amp; Limitations of this Package</Heading>
+			An order <M>\Lambda</M> can be created using the function <Ref Meth="ZpOrderByMultiMatrices"/>. The following
+			data needs to be specified:
+			<List>
+				<Item> A prime <M>p</M> </Item>
+				<Item> A list <M>[g_1,\ldots,g_k]</M> where each <M>g_i</M> is a list of  matrices over <M>\mathbb Z</M>.
+				 The list <M>g_i</M> represents a generator of the order. More precisely, <M>g_i[l]</M> is supposed to be the image of the <M>i</M>-th generator under the
+					<M>l</M>-th irreducible <M>\mathbb{Q}_p</M>-representation of <M>\mathbb{Q}_p \otimes \Lambda</M>.
+				</Item>
+			</List>
+			A few remarks are in order here:
+			<List>
+				<Item> We assume that we know the Wedderburn decomposition of <M>\mathbb{Q}_p\otimes\Lambda</M>.
+				When dealing with group algebras, this means that we need to know the irreducible representations of
+				the group over <M>\mathbb Q_p</M>, which is a non-trivial problem. For group algebras of finite groups,
+				we might be able to use <C>IrreducibleRepresentations</C>, but there is no guarantee
+				that these representations end up being defined over a small enough field.
+				The condition that the images of the generators of <M>\Lambda</M>
+				are integral means in particular that we single out one particular irreducible lattice as a "standard lattice"
+				in the corresponding simple <M>\mathbb{Q}_p\otimes\Lambda</M>-module.
+				For the purposes of this package it does not matter though which lattice we choose.
+				</Item>
+				<Item>
+					While we consider <M>A</M> as a <M>\mathbb Q_p</M>-algebra, we actually ask for the images of the generators
+					of <M>A</M> under the irreducible representations of <M>A</M> to be matrices over <M>\mathbb Q</M>.
+					In the case of group algebras of finite groups, it often happens that the irreducible representations
+					over <M>\mathbb Q</M> stay irreducible over <M>\mathbb Q_p</M>, in which case we get generators of the desired form.
+					Integral spinning will the allow us to turn this collection of matrices over the rationals into matrices over the
+					integers.
+				</Item>
+			</List>
+			None of the issues mentioned above arise for <M>\Lambda=\mathbb Z_p S_n</M>, where <M>S_n</M> denotes the symmetric group on
+			<M>n</M> letters. Therefore symmetric groups are particularly easy amenable to the methods in this package,
+			and we provide some functionality specific to symmetric groups.<P/>
+
+ 			Once we have defined an order in the sense of this package, we can define modules over it. This package supports
+			 modules that are either <M>\Lambda</M>-lattices (i. e. free as <M>\mathbb{Z}_p</M>-modules) or <M>p</M>-torsion modules
+			(i. e. <M>\mathbb{F}_p</M>-vector spaces with a <M>\Lambda</M>-action).
+			Other torsion types are not supported. Modules are internally represented by
+			the images of the generators <M>g_1,...,g_k</M> of <M>\Lambda</M> in some matrix ring. For lattices we
+			also store (if known) an embedding in a direct sum of irreducible lattices.
+		</Section>
+		<Section><Heading>Basic Data Structures</Heading>
+			This package handles two types of objects: orders and modules over orders. Although you can define
+			modules "by hand", the general idea is that you define an order (which essentially means
+			that you provide a set of irreducible integral representations) and use the functions provided
+			in this package to construct further modules (e. g. simple modules, projectives, radicals of modules) and
+			homomorphism spaces between them.
+			<Subsection><Heading>IsZpOrder</Heading>
+				A <M>\mathbb{Z}_p</M>-order in a semisimple <M>\mathbb{Q}_p</M>-algebra is represented by
+				an oject in the category <C>IsZpOrder</C>. You may create such an object using
+				<Ref Meth="ZpOrderByMultiMatrices"/>. Such an object (representing an order <M>\Lambda</M>)
+				is used to store information about:
+				<List>
+					<Item>
+						The irreducible representations of <M>\mathbb{Q}_p\otimes\Lambda</M>.
+					</Item>
+					<Item>
+						The endomorphism rings of the irreducible lattices (these are crucial for efficient computation). At present, we cannot compute these efficiently in &GAP; itself,
+						unless the generators of <M>\Lambda</M> generate a finite group (in which case we can use <Ref Meth="CalculateEndomorphismRingsByReynoldsNC"/>).
+						If you know that <M>\mathbb{Q}_p</M> is a
+						splitting field for <M>\mathbb{Q}_p\otimes\Lambda</M> you can use
+						<Ref Meth="InstallTrivialEndomorphismRings"/>. If you have a recent version of
+						<Package>Magma</Package> available, you can also compute these endomorphism rings using
+						<Ref Meth="CalculateEndomorphismRingsWithMAGMA"/>. If you have calculated these endomorphism
+						rings by other means, you can use <Ref Meth="InstallEndomorphismRingsNC"/> to install them.
+					</Item>
+					<Item>
+						The simple modules and the decomposition matrix of <M>\Lambda</M>.
+					</Item>
+				</List>
+				When we refer to an "order", we will always mean an object of this type.
+			</Subsection>
+			<Subsection><Heading>IsRModuleOverZpOrder</Heading>
+				An object on the category <C>IsRModuleOverZpOrder</C> represents a right module over an order. All modules in this
+				package are right modules, so we will usually just call them modules. Modules are represented
+				by a linear representation. The only exception is the zero module. This package supports three types
+				of modules:
+				<List>
+					<Item>
+						<E>Lattices</E>: Lattices are represented by a linear representation over <M>\mathbb{Z}_p</M>.
+							For practical purposes the package does expect the images of the generators of the order over which the lattice is defined to lie in <M>\mathbb{Z}^{n\times n}</M>
+							(this constitutes no further theoretical restriction). Lattices have the property <C>IsRLatticeOverZpOrder</C>.
+							Lattices in this package may also store an embedding into a direct sum of irreducible lattices, which is crucial for efficient computation.
+							If lattices are constructed
+							from other lattices using functions from this package, the functions will always compute and store such an embeding for all lattices they create.
+					</Item>
+					<Item>
+						<E><M>p</M>-torsion modules</E>: These are given by the images of the generators of the order
+						in some matrix ring over <M>\mathbb{F}_p</M>. <M>p</M>-torsion modules have the property
+						<C>IsRModuleOverZpOrderModp</C>.
+					</Item>
+					<Item>
+						<E>The zero module</E>: This one has the properties <C>IsZeroRModuleRep</C> and
+						<C>IsZero</C>.
+					</Item>
+				</List>
+			</Subsection>
+		</Section>
+		<Section><Heading>Examples</Heading>
+				<URL Text="An example session can be found here.">example.html</URL>
+		</Section>
+		</Chapter>
+		<Chapter><Heading>Provided Functions</Heading>
+
+		<Section><Heading>Basics</Heading>
+			<ManSection>
+				<Func Name="ZpOrderByMultiMatrices" Arg="p, gens"/>
+				<Description>
+					This function creates an order over <M>\mathbb{Z}_p</M> generated by the elements of <A>gens</A>.
+					<A>gens</A> is supposed to be a list of lists of matrices with integer entries.<P/>
+					It is highly recommended (and necessary for many functions), that you install endomorphism rings
+					for the irreducible lattices after defining an order. See Section <Ref Sect="Endo"/> for details.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="IrreducibleLattices" Arg="lambda"/>
+				<Description>
+					This returns list of irreducible lattices, one for each Wedderburn component. (Note that you have
+					fixed an ordering of the Wedderburn components upon creation of <A>lambda</A>. This ordering will be
+					used here.)
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="SimpleModules" Arg="lambda"/>
+				<Description>
+					Returns a list containing the simple modules of the order <A>lambda</A>. Once called,
+					the ordering of the simple modules will remain fixed.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="DecompositionMatrix" Arg="lambda"/>
+				<Description>
+					Return the decomposition matrix of the order <A>lambda</A>. Rows are sorted as
+					<Ref Meth="IrreducibleLattices"/>, columns as <Ref Meth="SimpleModules"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="NameSimpleModulesByDims" Arg="lambda"/>
+				<Description>
+					Gives the simple modules of <A>lambda</A> names according to their dimension
+					(constisting of the dimension and some dashes to make the names unique).
+					The names will (for instance) be carried over to a basic algebra by
+					<Ref Meth="BasicOrder"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="NameSimpleModules" Arg="lambda, lst"/>
+				<Description>
+					<A>lst</A> is supposed to be a list of strings of the same length as
+					<C>SimpleModules(<A>lambda</A>)</C>. This will assign names to the simple
+					modules of <A>lambda</A> accordingly.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="SimpleNames" Arg="lambda"/>
+				<Description>
+					Returns a list containing the names of the simple modules of <A>lambda</A>. If no names are set, this
+					will produce an error.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="NameWedderburnComponentsByDims" Arg="lambda"/>
+				<Description>
+					Gives the Wedderburn components of <A>lambda</A> names according to their dimension
+					(constisting of the dimension of the corresponding <M>\mathbb{Q}_p\otimes\Lambda</M>-module and some dashes to make the names unique).
+					The names will (for instance) be carried over to a basic algebra by
+					<Ref Meth="BasicOrder"/>..
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="NameWedderburnComponents" Arg="lambda, lst"/>
+				<Description>
+					<A>lst</A> is supposed to be a list of strings of the same length as
+					<C>IrreducibleLattices(<A>lambda</A>)</C>. This will assign names to the Wedderburn components
+					modules of <A>lambda</A> accordingly.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ComponentNames" Arg="lambda"/>
+				<Description>
+					Returns a list containing the names of the Wedderburn components of <A>lambda</A>. If no names are set, this
+					will produce an error.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="DirectSumOfOrders" Arg="lst"/>
+				<Description>
+					<A>lst</A> is supposed to be a list of orders. This will return the direct sum of those orders.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="DirectSumOfOrders" Arg="lambda1, lambda2"/>
+				<Description>
+					As above, for just two orders.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="BlocksOfZpOrder" Arg="lambda"/>
+				<Description>
+					This method will return a list of lists of integers. Each list of integers corresponds
+					to a block of <M>\Lambda</M>, the integers indexing the Wedderburn components belonging to
+					that block.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ExtractWedderburnComponents" Arg="lambda, lst"/>
+				<Description>
+					Given a list of integers in <A>lst</A> indexing Wedderburn componnents, this method will
+					calculate the projection of <M>\Lambda</M> onto those components (simply by projecting
+					the generators). Information on simple and ordinary representations (if present) will be
+					carried over to the order that is returned.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="RModuleOverZpOrder" Arg="lambda, rep"/>
+				<Description>
+					This method is used to create modules from representations.
+					<A>lambda</A> is supposed to be an order, and <A>rep</A> the images of the generators
+					of <A>lambda</A> in either <M>\mathbb{F}_p^{n\times n}</M> or
+					<M>\mathbb{Z}^{n\times n} \subset \mathbb{Z}_p^{n\times n}</M>, i. e. <A>rep</A> is
+					a list of matrices. This method returns the corresponding module.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="ZeroRModule" Arg="lambda"/>
+				<Description>
+					Returns the zero-module over the order <A>lambda</A>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="Dimension" Arg="M"/>
+				<Description>
+					Returns the dimension of the module <A>M</A>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="Generators" Arg="lambda"/>
+				<Description>
+					This returns the generators of <A>lambda</A> (i. e. a list of lists of matrices, representing elements in the
+					Wedderburn decomposition).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="Rep" Arg="M"/>
+				<Description>
+					<A>M</A> is supposed to be a (non-zero) module defined over an order <M>\Lambda</M>.
+					This method returns the images of the generators <M>\Lambda</M> under the representation associated to <A>M</A>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ReduceModP" Arg="M"/>
+				<Description>
+					<A>M</A> is supposed to be a module. This returns <M>M/pM</M>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="SubmoduleByBasisNC" Arg="M, B"/>
+				<Description>
+					Given a module <A>M</A> of dimension <M>n</M> and an <M>n\times n</M> matrix
+					<A>B</A> whose rowspace is a submodule of <A>M</A> (this is not checked), this method
+					will return the corresponding submodule (as a module in the sense of this package).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="MaximalSubmoduleBases" Arg="M[,S]"/>
+				<Description>
+					If <A>S</A> is not specified, this will return a list consisting of tuples
+					<C>[B,T]</C> (one for every maximal submodule of <A>M</A>), where <C>B</C> is a basis matrix for a maximal submodule
+					<M>N</M> of <A>M</A>, and <C>T</C> is a simple module isomorphic to the
+					quotient <M><A>M</A>/N</M>.
+					<P/>
+					If <A>S</A> is given (a simple module is expected here), this will return a list of basis matrices for all
+					maximal submodules <M>N</M> with <M><A>M</A>/N \cong <A>S</A></M>.
+					<P/>
+					Whenever the zero  module is a maximal submodule, its basis matrix will be given by an
+					empty list.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="MaximalSubmoduleBasesMTX" Arg="M"/>
+				<Description>
+					This returns a list of bases of all maximal submodules of the module <A>M</A> using the
+					&MeatAxe; that comes with &GAP;. This will only work if the generators of <M>\Lambda</M>
+					act as automorphisms on <A>M</A>. Unsing this function is therefore not recommended, use
+					<Ref Meth="MaximalSubmoduleBases"/> instead.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="MaximalSubmodules" Arg="M[,S]"/>
+				<Description>
+					Like <Ref Meth="MaximalSubmoduleBases"/>, but instead of basis matrices, this function will return
+					modules in the sense of this package.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="Hom" Arg="M, N"/>
+				<Description>
+					Calculates a basis for the homomorphism space between the modules <A>M</A>
+					and <A>N</A>. As any module in this package is canonically embedded in either
+					some <M>\mathbb{Z}_p^{1\times n}</M> or some <M>\mathbb{F}_p^{1\times n}</M>, this
+					method will always return a list of matrices either defined over the integers or over
+					<C>GF(p)</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="HomToSimpleNC" Arg="M, S"/>
+				<Description>
+					This is basically equivalent to <Ref Meth="Hom"/>, but it is assumed that <A>S</A> is simple.
+					This function uses the built-in &MeatAxe; of &GAP;, rendering it much faster than <Ref Meth="Hom"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="HomForLattices" Arg="M, N, opt"/>
+				<Description>
+					<A>M</A> and <A>N</A> are supposed to be lattices defined over an order <C>lambda</C>.
+					<A>opt</A> is supposed to be one of <C>[ ]</C> (useless), <C>[ 1 ]</C> <C>[ 2 ]</C>
+					or <C>[ 1, 2 ]</C> (although the ordering of the list is irrelevant).
+					This function computes a basis of <M>\textrm{Hom}(<A>M</A>,<A>N</A>)</M> and will return
+					a list containing the following:
+					<List>
+						<Item> If <M>1\in<A>opt</A></M>: A basis of <M>\textrm{Hom}(M,N)</M>, as it would
+							be returned by <Ref Meth="Hom"/>.</Item>
+						<Item> If <M>2\in<A>opt</A></M>: A basis of <M>\textrm{Hom}(M,N)</M> embedded
+						in
+							<Display>
+								\bigoplus_{i} \textrm{End}_{\mathbb{Q}_p\otimes \Lambda}(\mathbb{Q}_p\otimes L_i)^{m_i\times n_i}
+							</Display>
+						where <M>L_i</M> is the <M>i</M>-th irreducible lattice of the order <M>\Lambda</M>
+						(over which <A>M</A> and <A>N</A> are defined), as returned by
+						<Ref Meth="IrreducibleLattices"/>. The elements of <M>\textrm{End}_{\mathbb{Q}_p\otimes \Lambda}(\mathbb{Q}_p\otimes L_i)</M> are given
+						by a (fixed)
+						representation in some matrix ring over <M>\mathbb{Q}_p</M>. <M>m_i</M> resp.
+						<M>n_i</M> denote the multiplicity of <M>\mathbb{Q}_p\otimes L_i</M> as a summand
+						of <M>\mathbb{Q}_p\otimes M</M> resp. <M>\mathbb{Q}_p\otimes N</M>.
+						</Item>
+					</List>
+					This function requires that some additional information about the lattices is known,
+					namely an embedding into a direct sum of irreducible lattices, as well as the endomorphism rings of
+					the latter
+					(which is usually the case).
+					If <M>1\in<A>opt</A></M>, you may check that this information is present via
+					<C>IsBound(M!.embedding_into_irr_lats)</C> and <C>IsBound(M!.order!.Qp_end_bases)</C>.
+					If <M>2\in<A>opt</A></M> we additionally require <C>IsBound(M!.Qp_end_bases_smallmats)</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="RadicalOfModule" Arg="M"/>
+				<Description>
+					Returns a tuple <C>[R, v]</C>, where <C>R</C> is a module isomorphic to
+					<M>\textrm{Rad}(<A>M</A>)</M>. <C>v</C> will be a list of non-negative integers,
+					each <C>v[i]</C> indicating the multiplicity of <C>SimpleModules(...)[i]</C> in
+					<M><A>M</A>/\textrm{Rad}(<A>M</A>)</M>
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="TopEpimorphism" Arg="M"/>
+				<Description>
+					<A>M</A> is supposed to be a module. This returns a tuple <M>[Q,\phi,v,h]</M>,
+					where <M>Q</M> is a module isomorphic to <M><A>M</A> / \textrm{Rad} <A>M</A></M> and
+					<M>\phi: M \rightarrow Q</M> is an epimorphism. Furthermore <M>v</M> is a list
+					of the multiplicities of the different simple modules in <M>Q</M>.
+					<M>h</M> is a list of <M>\textrm{End}(S)</M>-bases of
+					<M>\textrm{Hom}(M, S)</M> (for all simple modules <M>S</M>).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="RadicalSeries" Arg="M, k"/>
+				<Description>
+					Calculates the first <A>k</A> radical layers of <A>M</A>. Returns a matrix <C>X</C> such that
+					<C>X[j][i]</C> is equal to the multiplicity of <C>SimpleModules(...)[i]</C> in
+					<M>\textrm{Rad}^{j-1}(M)/\textrm{Rad}^{j}(M)</M>
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="GramMatrixOfTrace" Arg="lambda, u"/>
+				<Description>
+					<A>u</A> is supposed to be a list of rationals, the same numer of entries as
+					<A>lambda</A> has Wedderburn components (i. e. <A>u</A> represents an element in
+					<M>Z(\mathbb{Q}_p\otimes<A>lambda</A>)</M>).
+					Return the Gram-matrix of <A>lambda</A> with respect to the trace bilinear form
+					<M>T_{<A>u</A>}: (a,b)\mapsto \textrm{tr}(<A>u</A>ab)</M> and the basis of <A>lambda</A> returned by
+					<Ref Meth="Generators"/>.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section Label="Endo"><Heading>Endomorphism Rings of the Irreducible Lattices</Heading>
+			Many functions in this package require that the endomorphism rings of the
+			irreducible lattices of an order are known. Unfortunately, at this point we cannot
+			effectively compute these in &GAP;.
+
+			<ManSection>
+				<Meth Name="InstallTrivialEndomorphismRings" Arg="lambda"/>
+				<Description>
+					Call this function if you <E>know</E> that <M>\mathbb{Q}_p</M> is a
+					splittiong field for <M>\mathbb{Q}_p\otimes<A>lambda</A></M>
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="InstallEndomorphismRingsNC" Arg="lambda, lst"/>
+				<Description>
+					<A>lst</A> is supposed to be a list of bases of endomorphism rings (i. e.
+					a list of lists of matrices). You may for instance call
+					<C>InstallEndomorphismRingsNC(lambda, List(IrreducibleLattices(lambda), L -> Hom(L,L)))</C>
+					to compute the endomorphism rings in &GAP; itself (this will however be horribly slow and excessive in memory usage).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="CalculateEndomorphismRingsByReynoldsNC" Arg="lambda"/>
+				<Description>
+					This calculates endomorphism rings using the Reynolds <Ref Meth="HomByReynoldsNC"/>. This only works if the
+					generators of <C>lambda</C> generate a finite group (e.g. if <C>lambda</C> is a group algebra).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="CalculateEndomorphismRingsWithMAGMA" Arg="lambda"/>
+				<Description>
+					This calculates endomorphism rings using <Package>MAGMA</Package>. Use <Ref Meth="SetMAGMAExecutable"/> to
+					specify the location of the <Package>MAGMA</Package>-executable on your system.
+				</Description>
+			</ManSection>
+
+		<ManSection>
+			<Meth Name="SetMAGMAExecutable" Arg="cmd"/>
+			<Description>
+				Use <C>cmd</C> to run <Package>MAGMA</Package>.
+			</Description>
+		</ManSection>
+
+		<ManSection>
+			<Meth Name="SetDebugOutput" Arg="b"/>
+			<Description>
+				<C>b</C> is expected to be a boolean. This turn debugging output on or off (as some computations
+				take a long time, it can be useful to have some indication of how the computation is progressing).
+			</Description>
+		</ManSection>
+	</Section>
+
+		<Section><Heading>Condensation for Group Algebras</Heading>
+			It is assumed throughout this section that the order <M>\Lambda</M> we are dealing with
+			is a group algebra (or a block of) <M>\mathbb{Z}_p G</M> for some finite group
+			<M>G</M>. It is furthermore assumed that the generators of <M>\Lambda</M>
+			are elements of <M>G</M>.
+
+			<ManSection>
+				<Meth Name="CondensationData" Arg="G, H [, chi]"/>
+				<Description>
+					<A>H</A> is supposed to be a <M>p'</M>-subgroup of <A>G</A>. <A>chi</A> is supposed to
+					be a linear (i. e. one-dimensional) character of <A>H</A>. If <A>chi</A> is not given,
+					it will be taken as the trivial character. This method then computes a condensation
+					idempotent <M>e_\chi</M> belonging to the pair <M>(H,\chi)</M> and a generating system
+					for <M>e_\chi \mathbb{Z}_p G e_\chi</M> (cf. <Cite Key="Noeske"/>).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="CondenseGroupRingNC" Arg="lambda [, gens], data"/>
+				<Description>
+					Returns an order that is a condensation of <A>lambda</A> with respect to
+					the condensation idempotent and system of generators fixed in <A>data</A>.
+					<A>data</A> should have been fixed via <C>CondensationData(...)</C>.
+					The argument <A>gens</A> should contain the images of the generators of
+					<M>G</M> (as returned by <C>GeneratorsOfGroup(G)</C>) in <M>\Lambda</M> (i. e., <A>gens</A>
+					will be a list of lists of matrices). If <A>gens</A> is not provided, it will be assumed
+					that the images will be the generators of <M>\Lambda</M> in the same order as they were given
+					upon creation of <A>lambda</A>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="CondensationProperties" Arg="lambda [, gens], data"/>
+				<Description>
+					This function is analogous to <Ref Meth="CondenseGroupRingNC"/>, except that
+					it actually just calculates which simple torsion-modules and which irreducible
+					ordinary representations are annihilated by the selected condensation idempotent.
+					You may use this to check wether the condensation will be faithful.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="CondenseMatricesNC" Arg="Ggens, Greps, data"/>
+				<Description>
+					<A>Ggens</A> is supposed to be a list of generators of a group <M>G</M>,
+					<A>Greps</A> is supposed to be a list of matrices (defined over the integers) of the
+					same length as <A>Ggens</A>. The first to arguments should define a representation of
+					the group in question, i. e., the map sending <C><A>Ggens</A>[i]</C> to <C><A>Greps</A>[i]</C>
+					extends to a representation of <M>G</M>. <A>data</A> is supposed to be a record generated by
+					<Ref Meth="CondensationData"/>. This will return a list <C>[cgens, base, baseR]</C>.
+					<C>cgens</C> will contain the images of the generators of the condesed algebra (as fixed in
+					<A>data</A>) under the condensed representation. <C>base</C> will be an embedding of
+					the condensed representation into the uncondensed, and <C>baseR</C> will be a right inverse of
+					<C>base</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="CondenseMatricesWithEvalMapNC" Arg="hom, data"/>
+				<Description>
+					Just like <Ref Func="CondenseMatricesNC"/>, but instead of the arguments <C>Ggens</C> and
+					<C>Greps</C> you specify a function <A>hom</A> which will return for any element in the
+					group its image under the representation you wish to condense.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="CondenseTorsionRepNC" Arg="Ggens, Greps, p, data"/>
+				<Description>
+					Just like <Ref Func="CondenseMatricesNC"/>, but for <A>p</A>-modular representations instead of integral ones.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Projective Modules &amp; Basic Algebras</Heading>
+			<ManSection>
+				<Meth Name="ProjectiveIndecomposableLattices" Arg="lambda"/>
+				<Description>
+					Calculates the projective indecomposable lattices for <A>lambda</A>. It will return
+					a list cof tuples, where the first entry is a projective indecomposable lattice, and the second one
+					a simple torsion module (its head). Depending on the dimensions of the projective indecomposables,
+					running this method may take some time.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="BasicOrder" Arg="lambda"/>
+				<Description>
+					This calculates a basic algebra for <A>lambda</A>.
+					This method calls <Ref Meth="ProjectiveIndecomposableLattices"/>, and thus may take some time.
+					The generators of the result will form a basis of the order. Names given to the simple modules
+					and Wedderburn components will be carried over accordingly.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="BasicOrder" Arg="lst"/>
+				<Description>
+					<A>lst</A> should be a list of projective indecomposable lattices. It will return an order
+					isomorphic to
+					<Display>
+						\bigoplus_{P, Q \in <A>lst</A>} \textrm{Hom}(P, Q)
+					</Display>
+					and carry over names accrodingly. If <A>lst</A> is a list of all projective indecomposables, this
+					is just equivalent to <C>BasicOrder(lambda)</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ProjectiveIndecomposableForBasicOrder" Arg="lambda, k"/>
+				<Description>
+					This will construct the projective indecomposable lattive with
+					head <C>SimpleModules(<A>lambda</A>)[k]</C>. This method just uses (in contrast to
+					<Ref Meth="ProjectiveIndecomposableLattices"/>) the regular representation
+					of <A>lambda</A>. <A>lambda</A> should be an order constructed via
+					<Ref Meth="BasicOrder"/> (this is not checked though).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ProjectiveIndecomposableLatticesForBasicOrder" Arg="lambda"/>
+				<Description>
+					This behaves like <Ref Meth="ProjectiveIndecomposableLattices"/>, but will make use of <Ref Meth="ProjectiveIndecomposableForBasicOrder"/>. In particular, <A>lambda</A> should be an order constructed
+					via <Ref Meth="BasicOrder"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="GeneratorsForBasicOrder" Arg="lambda"/>
+				<Description>
+					This will calculate a minimal (w.r.t. inclusion) generating system for <A>lambda</A>
+					(that will be preimages of a basis of <M>\Lambda/\textrm{Jac}(\Lambda)</M> and of a basis
+					of <M>\textrm{Jac}(\Lambda)\textrm{Jac}^2(\Lambda)+p\Lambda</M>).
+					<A>lambda</A> should be an order constructed via
+					<Ref Meth="BasicOrder"/> (this is not checked though). This method returns
+					a list consisting of an order and a function. The order will in the mathematical sense
+					be equal to <A>lambda</A>, but will have the
+					calculated generating set as its set of generators. The function that is returned can be applied to modules defined over <A>lambda</A>, and will return the same module defined over the order that was returned.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Computing with Lattices</Heading>
+
+			<ManSection>
+				<Meth Name="AllLattices" Arg="L"/>
+				<Description>
+					If <C>L</C> is a lattice over an order, this function computes  representatives for
+					the isomorphism classes of full sublattices of <C>L</C>, or, equivalently, for all
+					lattices in the <M>\mathbb Q_p</M>-span of <C>L</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="AllLatticesInd" Arg="L1, L2"/>
+				<Description>
+					If <C>L1</C> and <C>L2</C> are lattices over the same order, this function computes  representatives for
+					the isomorphism classes of full sublattices of <C>DirectSumOfModules(L1,L2)</C> whose projection down to <C>L1</C> and <C>L2</C>
+					is all of <C>L1</C> and <C>L2</C>, respectively.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="IsomorphismRModules" Arg="L1, L2"/>
+				<Description>
+					If <C>L1</C> and <C>L2</C> are lattices over the same order, this function returns an
+					isomorpism between <C>L1</C> and <C>L2</C> if the two lattices are isomorphic, and
+					<C>fail</C> if they are not.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="LatticeAlgorithm" Arg="M, b"/>
+				<Description>
+					<A>M</A> is supposed to be an irreducible lattice (this will not be checked, but if it is
+					not irreducible, this function will not terminate) and <A>b</A> should be a boolean.
+					What is returned depends on <A>b</A>:
+					<List>
+						<Item><C><A>b</A> = false</C>: In this case, this function calculates representatives
+						(possibly with repetitions) of all isomorphism classes of irreducible lattices in
+						<M>\mathbb{Q}_p\otimes M</M>. It return a list of basis matrices for these as sublattices of
+						<A>M</A>.</Item>
+						<Item><C><A>b</A> = true</C>: In this case, this function will return only representatives of
+						lattices with simple top. The result will be a list of tuples, where the first entry is a basis matrix, and the second entry is a simple module (the top of the lattice).</Item>
+					</List>
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="LatticesWithSimpleRadQuo" Arg="M"/>
+				<Description>
+					<A>M</A> is supposed to be an irreducible lattice.
+					This returns representatives (possibly with repititions) of all irreducible lattices with
+					simple top in <M>\mathbb{Q}_p\otimes M</M>. It return a list of tuples, where the first entry is a
+					lattice and the second one its top.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="GlueUpNC" Arg="P, Q, S"/>
+				<Description>
+					<A>P</A> and <A>Q</A> are supposed to be lattices, and <A>S</A> is supposed to be a simple module.
+					Under the assumption that <A>P</A> and <A>Q</A> both have simple top isomorphic to <A>S</A>
+					and furthermore <A>P</A> and <A>Q</A> have no non-zero common <M>\mathbb{Z}_p</M>-torsionfree image
+					this method will return a (full) lattice with simple top <A>S</A> in <M><A>P</A>\oplus <A>Q</A></M>. If the
+					assumptions are not met, this method may not terminate.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Basic Homological Algebra</Heading>
+			<ManSection>
+				<Meth Name="ProjectiveCover" Arg="M"/>
+				<Description>
+					Given the module <A>M</A>, this returns a tuple <M>[P, \phi]</M>. Here <M>P</M> is
+					the projective cover of <A>M</A>, and <M>\phi</M> is an epimorphism
+					<M>P \rightarrow <A>M</A></M>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="LiftHomomorphismNC" Arg="M, phi, N, psi, L"/>
+				<Description>
+					<A>M</A>, <A>N</A> and <A>L</A> are supposed to be modules.
+					<A>phi</A> is supposed to be a homomorphism <M><A>M</A>\rightarrow<A>L</A></M>.
+					<A>psi</A> is supposed to be a homomorphism <M><A>N</A>\rightarrow<A>L</A></M>.
+					This return a homomorphism <M>X: M \rightarrow N</M> such that
+					<M>X \cdot <A>psi</A> = <A>phi</A></M>. If no such <M>X</M> exists, <C>fail</C> is returned.
+					Note that all homomorphisms are represented by matrices,
+					and it is not checked wether the given matrices actually are homomorphisms.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="LiftHomomorphismToDirectSumNC" Arg="lst, svec, phi, N, psi, L"/>
+				<Description>
+					<A>lst</A> is supposed to be a list of lattices. <A>svec</A> is supposed to be
+					a list of indices. This is then equivalent to calling
+						<C>LiftHomomorphismNC(DirectSumOfModules(List(svec, i -> lst[i])), phi, N, psi, L)</C>
+					but it is actually a lot faster.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="HellerTranslate" Arg="M"/>
+				<Description>
+					Given a module <A>M</A>, this computes its Heller translate. Note that this is always going to
+					return a lattice.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="HellerTranslateModular" Arg="M"/>
+				<Description>
+					Given a torsion module <A>M</A>, this computes its modular Heller translate. That is,
+					the Heller translate in the module category of <M>\mathbb{F}_p \otimes \Lambda</M>, where
+					<M>\Lambda</M> denotes the order over which <A>M</A> is defined.
+					Note that this is always going to return a torsion module.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Input/Output</Heading>
+			<ManSection>
+				<Meth Name="PrintAsFunction" Arg="X"/>
+				<Description>
+					Outputs a function that will create the module or order <A>X</A>. Usually you
+					would use <Ref Meth="SaveAsFunction"/> directly.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="SaveAsFunction" Arg="filename, X"/>
+				<Description>
+					Saves the module or order <A>X</A> to the file <A>filename</A>
+					(which will be overwritten in case it exists). You can then read that file
+					using <Ref Meth="ReadOrder"/> or <Ref Meth="ReadModule"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="SaveAsRecord" Arg="filename, lambda"/>
+				<Description>
+					This writes the order <A>lambda</A> to the file
+					<A>filename</A> (which will be overwritten in case it exists). The file
+					will then contain a &GAP;-function that returns a record. The content of that file
+					cannot be turned back into an order directly using this package, so usually you would
+					want to use <Ref Meth="SaveAsFunction"/>. However, the advantage of <Ref Meth="SaveAsRecord"/>
+					is that you do not need this package to read the file that it produces.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ReadOrder" Arg="filename"/>
+				<Description>
+					Returns an order that is identical to the one that was written to <A>filename</A>
+					using <Ref Meth="SaveAsFunction"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="ReadModule" Arg="filename, lambda"/>
+				<Description>
+					Returns a module that is identical to the one that was written to <A>filename</A>
+					using <Ref Meth="SaveAsFunction"/>. That module will be defined over <A>lambda</A>
+					(so when you save a module be sure to always save the order over which it is defined as well).
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Symmetric Groups</Heading>
+			<ManSection>
+				<Func Name="ZpSn" Arg="p, n"/>
+				<Description>
+					This returns the order <M>\mathbb{Z}_p \Sigma_n</M>. The Wedderburn components
+					are named by partitions, and sorted descending with respect to the lexicographical ordering.
+					The simple modules are named after their dimensions (it will not be too hard to
+					find the corresponding <A>p</A>-regular partitions, though). The lattices returned
+					by <Ref Meth="IrreducibleLattices"/> will be the Specht lattices.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="ZpSnWedderburnComponentsNC" Arg="p, part"/>
+				<Description>
+					<A>part</A> is supposed to be a non-empty list of pairwise distinct partitions of the same number <M>n</M> (this will however not be checked).
+					Returns the projection of <M>\mathbb{Z}_p \Sigma_n</M> on the Wedderburn components
+					labeled by the partitons in <A>part</A>. Otherwise this behaves like <Ref Func="ZpSn"/>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="NaturalSpechtRepresentation" Arg="lambda"/>
+				<Description>
+					<A>lambda</A> is supposed to be a partition of some positive integer <C>n</C>. This function returns a
+					group homomorphism from <C>SymmetricGroup(n)</C> into a general linear group over the integers.
+					To be more precise, this function implements Young's "natural" representation for the Specht module
+					<M>S^\lambda</M>. See  Example 25.2 in <Cite Key="James"/> for details.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="PartitionAsString" Arg="mu"/>
+				<Description>
+					Given a partition <A>mu</A>, this returns a string representing <A>mu</A>.
+					For instance <C>PartitionAsString([3,2,1,1])</C> returns <C>"(3,2,1^{2})"</C>.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Experimental Functionality</Heading>
+			The functions in this section are somewhat experimental and only work reasonably well in small
+			examples. All functions in this section do furthermore require that the generators of the given orders
+			form a basis.
+
+			<ManSection>
+				<Meth Name="SelfdualSuborders" Arg="lambda, u"/>
+				<Description>
+					Given an element <M>u</M> in <M>Z(\mathbb{Q}_p\otimes<A>lambda</A>)</M>, this returns all
+					(ismomorphism classes of) orders contained in <A>lambda</A> that are selfdual with respect to
+					the trace bilinear form <M>T_u</M>  (same as in <Ref Meth="GramMatrixOfTrace"/>).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="AreConjugate" Arg="lambda, gamma"/>
+				<Description>
+					Given two orders <A>lambda</A> and <A>gamma</A>
+					in the same semisimple <M>\mathbb{Q}_p</M>-algebra <M>A</M>, this decides wether the two are
+					conjugate (or, equivalently, isomorphic as algebras over the center of <M>A</M>).
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Pretty Output</Heading>
+			<ManSection>
+				<Func Name="PrintDecompositionMatrixAsLatex" Arg="A"/>
+				<Description>
+					Given an order <C>A</C>, this function prints the decomposition matrix of <C>A</C> as <Package>LaTeX</Package>-code
+					(including information on names and dimensions of modules).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="PrintBasisOfOrderAsMarkdown" Arg="A"/>
+				<Description>
+					Given a basic order <C>A</C>, this function prints a basis of <C>A</C> as <Package>Jupyter</Package>-markdown code
+					(can easily be turned into <Package>LaTeX</Package>-code).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="JupyterDisplayDecompositionMatrix" Arg="A"/>
+				<Func Name="JupyterDisplayBasisOfOrder" Arg="A"/>
+				<Func Name="JupyterDisplayMultiMatrix" Arg="lst"/>
+				<Description>
+					If <Package>GAP</Package> is run in a Jupyter notebook, this will render the respective objects
+					in the notebook.
+				</Description>
+			</ManSection>
+		</Section>
+
+		<Section><Heading>Miscellaneous Other Functions</Heading>
+			<ManSection>
+				<Func Name="SpinningAlgorithmNC" Arg="lst"/>
+				<Description>
+					Given a list <C>lst</C> of rational square matrices that generate a <M>\mathbb Z</M>-order, this function
+					return a list <C>ret</C> of integer square matrices such that <M>T^{-1}\cdot \texttt{lst}[i] \cdot T = \texttt{ret}[i] \ \forall i</M> for an invertible rational matrix
+					<M>T</M>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Func Name="UnFlattenMultiMatrixNC" Arg="lst, dimvec"/>
+				<Description>
+					When <M>A=[A_1,\ldots,A_k]</M> is a list of matrices of
+					dimensions <M><A>dimvec</A>=[n_1,\ldots,n_k]</M>, this method
+					is inverse to <C>Flat(...)</C>, i. e. <C>UnFlattenMultiMatrixNC(Flat(A), dimvec) = A</C>.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="DiagonalJoin" Arg="lst"/>
+				<Description>
+					<A>lst</A> is supposed to be a list <M>[A_1,\ldots,A_k]</M>, and the method returns
+					<M>\textrm{Diag}(A_1,\ldots,A_k)</M>
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="DiagonalJoin" Arg="A, B"/>
+				<Description>
+					The same as above, for just two matrices.
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="Valuation" Arg="r, p"/>
+				<Description>
+					Returns the <A>p</A>-valuation of the rational number <A>r</A> (the built-in method in &GAP;
+					only covers integers).
+				</Description>
+			</ManSection>
+
+			<ManSection>
+				<Meth Name="RightInverse" Arg="M"/>
+				<Description>
+					Computes a right inverse of the matrix <A>M</A> (over <C>DefaultFieldOfMatrix(M)</C>).
+					If <A>M</A> has no right inverse, it returns <C>fail</C>.
+				</Description>
+			</ManSection>
+		</Section>
+		</Chapter>
+	</Body>
+
+	<Bibliography Databases="orders.bib"/>
+</Book>
