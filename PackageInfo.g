@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "orders",
 Subtitle := "Orders over the p-adic integers and their modules",
 Version := "1.0",
-Date := "09-07-2018",
+Date := "09/07/2018",
 
 Persons := [
 
@@ -13,7 +13,7 @@ Persons := [
       IsAuthor      := true,
       IsMaintainer  := true,
       Email         := "florian.eisele@city.ac.uk",
-      WWWHome       := "",
+      WWWHome       := "https://feisele.github.io",
       PostalAddress := Concatenation("City, University of London\n",
 	                                "Northampton Square\n",
 	                                "London EC1V 0HB\n",
@@ -23,14 +23,16 @@ Persons := [
 
 ],
 
-Status := "none",
+Status := "other",
 
-README_URL := "",
-PackageInfoURL := "",
+README_URL := "https://github.com/feisele/orders/blob/master/README.md",
+PackageInfoURL := "https://github.com/feisele/orders/blob/master/README.md",
 
 AbstractHTML :=
 "",
-PackageWWWHome := "",
+PackageWWWHome := "https://github.com/feisele/orders/",
+
+ArchiveURL := "https://github.com/feisele/orders/archive/1.0.tar.gz",
 
 PackageDoc := rec(
   BookName  := "orders",
@@ -54,6 +56,7 @@ BannerString := Concatenation("-------------------------------------------------
                               "      Florian Eisele (florian.eisele@city.ac.uk)          \n",
                               "--------------------------------------------------------------\n"),
 Autoload := false,
-Keywords := ["orders", "lattices", "group rings"]
+Keywords := ["orders", "lattices", "group rings"],
+ArchiveFormats := ""
 
 ));
