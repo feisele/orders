@@ -885,7 +885,7 @@ InstallGlobalFunction(GlueUpNC, [IsRLatticeOverZpOrder and IsRModuleByRepresenta
 		betal := List(IdentityMat(S!.n, GF(S!.p)), e -> SolutionMat(beta, e));
 		H := List(alpha*betal, z -> List(z, zz -> Int(zz)));
 		JQ := MaximalSubmoduleBases(Q, S)[1];
-		T := MutableNullMat(P!.n + Q!.n, P!.n + Q!.n, Integers);
+		T := NullMat(P!.n + Q!.n, P!.n + Q!.n, Integers);
 		for i in [1..P!.n] do
 			T[i][i] := 1;
 			for j in [1..Q!.n] do
@@ -1047,7 +1047,7 @@ InstallMethod(BasicOrder, [IsList],
 					Add(blockidx, [Size(bas) + 1, Size(homs[i][j])]);
 				fi;
 				for m in homs[i][j] do
-					m0 := List([1..Size(dimvec)], k -> MutableNullMat(Sum(dimvec[k]), Sum(dimvec[k]), Integers));
+					m0 := List([1..Size(dimvec)], k -> NullMat(Sum(dimvec[k]), Sum(dimvec[k]), Integers));
 					for n in [1..Size(dimvec)] do
 						if IsBound(m[support[n]]) then
 							posi := Sum(dimvec[n]{[1..i-1]});
@@ -1211,7 +1211,7 @@ InstallMethod(LiftHomomorphismNC, [IsRModuleOverZpOrder and IsRModuleByRepresent
 	                            # mu: P -> M such that mu.psi: P -> N is equal to phi.
 		local hom0, hom, coeff, ret;
 		if IsZero(N) then
-			return MutableNullMat(P!.n, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
+			return NullMat(P!.n, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
 		elif not IsRModuleByRepresentationRep(N) then
 			TryNextMethod();
 		fi;
@@ -1244,7 +1244,7 @@ InstallMethod(LiftHomomorphismToDirectSumNC, [IsList, IsList, IsMatrix,
 		fi;
 		dimP := Sum(List(svec, q -> lst[q]!.n));
 		if IsZero(N) then
-			return MutableNullMat(dimP, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
+			return NullMat(dimP, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
 		elif not IsRModuleByRepresentationRep(N) then
 			TryNextMethod();
 		fi;
@@ -1258,10 +1258,10 @@ InstallMethod(LiftHomomorphismToDirectSumNC, [IsList, IsList, IsMatrix,
 		for i in [1..Size(svec)] do
 			px := Sum(List([1..i-1], q -> lst[svec[q]]!.n));
 			for h in phom[svec[i]] do
-				hx := MutableNullMat(dimP, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
+				hx := NullMat(dimP, M!.n, DefaultFieldOfMatrix(M!.gens[1]));
 				hx{[px+1..px+Size(h)]}{[1..M!.n]} := h;
 				Add(hom0, hx);
-				hx_ := MutableNullMat(dimP, N!.n, DefaultFieldOfMatrix(N!.gens[1]));
+				hx_ := NullMat(dimP, N!.n, DefaultFieldOfMatrix(N!.gens[1]));
 				hx_{[px+1..px+Size(h)]}{[1..N!.n]} := h*psi;
 				Add(hom, Flat(hx_));
 			od;
@@ -1666,7 +1666,7 @@ InstallMethod(Hom, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
 		fi;
 
 		# Construct the matrix eqn for the corresponding system of linear equations (over R):
-		eqn := MutableNullMat(M!.n*N!.n, (M!.n*N!.n)*Size(M!.gens), R);
+		eqn := NullMat(M!.n*N!.n, (M!.n*N!.n)*Size(M!.gens), R);
 		for k in [1..Size(M!.gens)] do
 			for i in [1..M!.n] do
 				for j in [1..N!.n] do
@@ -1706,7 +1706,7 @@ InstallMethod(Hom, [IsRModuleOverZpOrder and IsRModuleByRepresentationRep,
 		# Reconstruct the homomorphisms from ns:
 		hom := [];
 		for x in range do
-			hom0 := MutableNullMat(M!.n, N!.n, R);
+			hom0 := NullMat(M!.n, N!.n, R);
 			for i in [1..M!.n] do
 				for j in [1..N!.n] do
 					hom0[i][j] := ns[x][i+M!.n*(j-1)];
@@ -1878,7 +1878,7 @@ InstallMethod(DiagonalJoin, [IsList],
 			Error("DiagonalJoin expects its arguments to be matrices");
 		fi;
 
-		M := MutableNullMat(Sum(List(L, l -> Size(l))), Sum(List(L, l -> Size(TransposedMat(l)))),
+		M := NullMat(Sum(List(L, l -> Size(l))), Sum(List(L, l -> Size(TransposedMat(l)))),
 			DefaultField(L[1][1][1]));
 		posr := 0;
 		posc := 0;
@@ -1905,7 +1905,7 @@ InstallMethod(RightInverse, [IsMatrix],
 		local  F, V, i, Q, T, Mtr, lst;
 		F := DefaultFieldOfMatrix(M);
 		V := SubspaceNC(FullRowSpace(F, Size(M)), []);
-		Q := MutableNullMat(Size(M[1]), Size(M), F);
+		Q := NullMat(Size(M[1]), Size(M), F);
 		Mtr := TransposedMat(M);
 		lst := [ ];
 		i := 1;
@@ -1998,7 +1998,7 @@ InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMultiMatrixRep, IsList]
 			Error("The generators of the first argument must be a basis of the order for this to work!");
 		fi;
 
-		G := MutableNullMat(Size(A!.gens), Size(A!.gens), Integers);
+		G := NullMat(Size(A!.gens), Size(A!.gens), Integers);
 		for i in [1..Size(A!.gens)] do
 			for j in [i..Size(A!.gens)] do
 				G[i][j] := Sum(List([1..Size(A!.nvec)], k -> u[k]*Trace(A!.gens[i][k]*A!.gens[j][k])));
@@ -2018,7 +2018,7 @@ InstallMethod(GramMatrixOfTrace, [IsZpOrder and IsZpOrderMatrixRep, IsRat],
 			Error("The generators of the first argument must be a basis of the order for this to work!");
 		fi;
 
-		G := MutableNullMat(Size(A!.gens), Size(A!.gens), Integers);
+		G := NullMat(Size(A!.gens), Size(A!.gens), Integers);
 		for i in [1..Size(A!.gens)] do
 			for j in [1..Size(A!.gens)] do
 				G[i][j] := u*Trace(A!.gens[i]*A!.gens[j]);
@@ -2572,7 +2572,7 @@ InstallGlobalFunction(NaturalSpechtRepresentation, [ IsList ],
 		std := EnumerateStandardTableaux(lambda);
 		lst := [ ];
 		for j in [1..n-1] do
-			rho := MutableNullMat(Size(std), Size(std));
+			rho := NullMat(Size(std), Size(std));
 			for i in [1..Size(std)] do
 				ai := ContentVector(std[i]);
 				if ai[j + 1] = ai[j] + 1 then

@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "orders",
 Subtitle := "Orders over the p-adic integers and their modules",
 Version := "1.0",
-Date := "09/07/2018",
+Date := "14/12/2020",
 
 Persons := [
 
