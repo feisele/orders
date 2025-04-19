@@ -2,8 +2,9 @@ SetPackageInfo( rec(
 
 PackageName := "orders",
 Subtitle := "Orders over the p-adic integers and their modules",
-Version := "1.0",
-Date := "14/12/2020",
+Version := "1.0.3",
+Date := "19/04/2025",
+License := "GPL-2.0-or-later",
 
 Persons := [
 
@@ -12,14 +13,11 @@ Persons := [
       FirstNames    := "Florian",
       IsAuthor      := true,
       IsMaintainer  := true,
-      Email         := "florian.eisele@city.ac.uk",
+      Email         := "florian.eisele@manchester.ac.uk",
       WWWHome       := "https://feisele.github.io",
-      PostalAddress := Concatenation("City, University of London\n",
-	                                "Northampton Square\n",
-	                                "London EC1V 0HB\n",
-	                                "United Kingdom"),
-      Place         := "London",
-      Institution   := "City, University of London"),
+      PostalAddress := "University of Manchester",
+      Place         := "Manchester",
+      Institution   := "University of Manchester"),
 
 ],
 
@@ -53,7 +51,7 @@ AvailabilityTest := ReturnTrue,
 BannerString := Concatenation("--------------------------------------------------------------\n",
                               "  orders - Computing with orders over the p-adic integers  \n",
                               "                   (version ", ~.Version, ")\n\n",
-                              "      Florian Eisele (florian.eisele@city.ac.uk)          \n",
+                              "      Florian Eisele (florian.eisele@manchester.ac.uk)          \n",
                               "--------------------------------------------------------------\n"),
 Autoload := false,
 Keywords := ["orders", "lattices", "group rings"],

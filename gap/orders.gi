@@ -7,14 +7,14 @@
 
 InstallGlobalFunction(_InverseRatMat@, function(m) return m^(-1); end);
 
-InstallGlobalFunction(ZpOrderByMatrices, [IsPrime, IsList],
+InstallGlobalFunction(ZpOrderByMatrices, # [IsPrime, IsList],
 	function(p, gens)
  		local order;
 		order := rec( p := p, gens := gens, n := Size(gens[1]) );
 		return Objectify(NewType(ZpOrderFamily, IsZpOrder and IsZpOrderMatrixRep) , order);
   end);
 
-InstallGlobalFunction(ZpOrderByMultiMatrices, [IsPrime, IsList],
+InstallGlobalFunction(ZpOrderByMultiMatrices, # [IsPrime, IsList],
 	function(p, gens)
 		local order;
 		order := rec( p := p, gens := gens, nvec := List(gens[1], Size) );
@@ -34,9 +34,10 @@ InstallMethod(String, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		      " generators in ", String(Size(order!.nvec)), " Wedderburn components>");
 	end);
 
-InstallMethod(ViewString, [IsZpOrder and IsZpOrderMultiMatrixRep], String);
+InstallMethod(ViewString, [IsZpOrder and IsZpOrderMultiMatrixRep], 
+    String);
 
-InstallGlobalFunction(RModuleOverZpOrder, [IsZpOrder, IsList],
+InstallGlobalFunction(RModuleOverZpOrder, # [IsZpOrder, IsList],
 	function(order, rep)
 		local modulus, n, M;
 
@@ -76,7 +77,7 @@ InstallGlobalFunction(RModuleOverZpOrder, [IsZpOrder, IsList],
 		return M;
 	end);
 
-InstallGlobalFunction(ZeroRModule, [IsZpOrder],
+InstallGlobalFunction(ZeroRModule, # [IsZpOrder],
 	function(order)
 		local M;
 		M := Objectify(NewType(RModuleOverZpOrderFamily,
@@ -179,7 +180,7 @@ InstallMethod(InstallEndomorphismRingsNC, [IsZpOrder and IsZpOrderMultiMatrixRep
 MakeReadWriteGlobal("_MAGMA_EXECUTABLE@");
 _MAGMA_EXECUTABLE@ := "magma";
 
-InstallGlobalFunction(SetMAGMAExecutable, [IsString],
+InstallGlobalFunction(SetMAGMAExecutable, # [IsString],
 	function(s)
 		_MAGMA_EXECUTABLE@ := s;
 	end);
@@ -360,7 +361,7 @@ InstallMethod(ReadModule, [IsString, IsZpOrder],
 		return M;
 	end);
 
-InstallGlobalFunction(UnFlattenMultiMatrixNC, [IsList, IsList],
+InstallGlobalFunction(UnFlattenMultiMatrixNC, # [IsList, IsList],
 	function(v, dimvec)
 		local pos, v0, k;
 		pos := List([1..Size(dimvec)], i -> Sum(List([1..i-1], j -> dimvec[j]^2)) + 1);
@@ -824,7 +825,7 @@ InstallMethod(MaximalSubmoduleBasesMTX, [IsRModuleOverZpOrder and IsRModuleByRep
 	end);
 
 InstallGlobalFunction(LatticeAlgorithm,
-	[IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
+	# [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M, b) # b = false => Find representatives for all iso.classes of lattices in M
                   # b = true => Just find the ones with simple radical quotient
 		local simple, lat, lastlayer, thislayer, m, n, x, max, bas;
@@ -866,7 +867,7 @@ InstallGlobalFunction(LatticeAlgorithm,
 		return lat;
 	end);
 
-InstallGlobalFunction(LatticesWithSimpleRadQuo, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
+InstallGlobalFunction(LatticesWithSimpleRadQuo, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
 		local lat;
 
@@ -874,9 +875,9 @@ InstallGlobalFunction(LatticesWithSimpleRadQuo, [IsRLatticeOverZpOrder and IsRMo
 		return List(lat, l -> [SubmoduleByBasisNC(M, l[1]), l[2]]);
 	end);
 
-InstallGlobalFunction(GlueUpNC, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
-                                 IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
-											IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
+InstallGlobalFunction(GlueUpNC, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
+                                # IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
+								#			IsRModuleOverZpOrderModp and IsRModuleByRepresentationRep],
 	function(P, Q, S)
 		local alpha, beta, betal, H, JQ, T, X, cont, L, max, N, i, j;
 
@@ -1509,8 +1510,8 @@ InstallMethod(GeneratorsForBasicOrder, [IsZpOrder and IsZpOrderMultiMatrixRep],
 		return [B, lincomb];
 	end);
 
-InstallGlobalFunction(HomForLattices, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
-                                       IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsList],
+InstallGlobalFunction(HomForLattices, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
+                                      # IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsList],
 	function(M, N, opt)
 		# opt: = [1], [2] or [1,2]: (opt = [ ] is possible, but useless...)
 		#      1: Return Hom(M, N) embedded in Hom_Zp(M, N)
@@ -1755,7 +1756,7 @@ InstallMethod(CondensationData, [IsGroup, IsGroup],
 		return CondensationData(G, K, TrivialCharacter(K));
 	end);
 
-InstallGlobalFunction(CondenseMatricesWithEvalMapNC, [IsFunction, IsRecord],
+InstallGlobalFunction(CondenseMatricesWithEvalMapNC, # [IsFunction, IsRecord],
 	function(hom, data)
 		local emat, base, baseR, cgens;
 		emat := CoefficientsAndMagmaElements(data.idempot);
@@ -1769,14 +1770,14 @@ InstallGlobalFunction(CondenseMatricesWithEvalMapNC, [IsFunction, IsRecord],
 		return [cgens, base, baseR];
 	end);
 
-InstallGlobalFunction(CondenseMatricesNC, [IsList, IsList, IsRecord],
+InstallGlobalFunction(CondenseMatricesNC, # [IsList, IsList, IsRecord],
 	function(Ggens, Greps, data)
 		local hom;
 		hom := GroupHomomorphismByImagesNC(data.G, GL(Size(Greps[1]), Integers), Ggens, Greps);
 		return CondenseMatricesWithEvalMapNC(g -> g^hom, data);
 	end);
 
-InstallGlobalFunction(CondenseTorsionRepNC, [IsList, IsList, IsRecord],
+InstallGlobalFunction(CondenseTorsionRepNC, # [IsList, IsList, IsRecord],
 	function(Ggens, Greps, p, data)
 		local hom, emat, base, baseR, cgens;
 		hom := GroupHomomorphismByImagesNC(data.G, GL(Size(Greps[1]), GF(p)), Ggens, Greps);
@@ -1931,7 +1932,7 @@ InstallMethod(RightInverse, [IsMatrix],
 
 # Specific setup for the symmetric groups
 
-InstallGlobalFunction(ZpSnWedderburnComponentsNC, [IsPrime, IsList],
+InstallGlobalFunction(ZpSnWedderburnComponentsNC, # [IsPrime, IsList],
 	function(p, part)
 		local A, n, rho;
 		n := Sum(part[1]);
@@ -1946,7 +1947,7 @@ InstallGlobalFunction(ZpSnWedderburnComponentsNC, [IsPrime, IsList],
 		return A;
 	end);
 
-InstallGlobalFunction(PartitionAsString, [IsList],
+InstallGlobalFunction(PartitionAsString, # [IsList],
 	function(p)
 		local ret, p0;
 		p0 := Collected(p);
@@ -2256,8 +2257,8 @@ InstallMethod(AreConjugate, [IsZpOrder and IsZpOrderMultiMatrixRep, IsZpOrder an
 
 # Returns integral matrices, but only a Q-basis of Hom_A(QM, QN). M and N need to be
 # lattices over a group algebra, with generators being group elements (this is not checked).
-InstallGlobalFunction(HomByReynoldsNC, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
-                    IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
+InstallGlobalFunction(HomByReynoldsNC, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep,
+                    # IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M, N)
     local G, Ggens, repM, repN, hom, rey, bas_, trans, reyG;
     Ggens := List([1..Size(M!.gens)], i -> DiagonalJoin(M!.gens[i], N!.gens[i]));
@@ -2397,7 +2398,7 @@ InstallMethod(IsomorphismRModules, [IsRLatticeOverZpOrder and IsRModuleByReprese
 # and so on. A lattice is dropped if it does not filfill the condition cond or if
 # it is isomorphic to a lattice that found before. If a lattice is dismissed,
 # we donot consider its sublattices. (this function is mostly for internal use)
-InstallGlobalFunction(AllLatticesCond, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsFunction],
+InstallGlobalFunction(AllLatticesCond, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsFunction],
 	function(M, cond)
 		local simple, lat, lastlayer, thislayer, m, n, x, max, bas, old, inv, cand, perm;
 		simple := SimpleModules(M!.order);
@@ -2449,14 +2450,14 @@ InstallGlobalFunction(AllLatticesCond, [IsRLatticeOverZpOrder and IsRModuleByRep
 	end);
 
 # Returns a list of all isoclasses of sublattices of M
-InstallGlobalFunction(AllLattices, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
+InstallGlobalFunction(AllLattices, # [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(M)
   	return AllLatticesCond(M, x -> true);
 	end);
 
 # Returns a list of all isoclasses sublattices of DirectSum(L1, L2) which surject onto
 # both L1 and L2
-InstallGlobalFunction(AllLatticesInd, [IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
+InstallGlobalFunction(AllLatticesInd, #[IsRLatticeOverZpOrder and IsRModuleByRepresentationRep, IsRLatticeOverZpOrder and IsRModuleByRepresentationRep],
 	function(L1, L2)
 	  local L, d1, d2, i1, i2, surj;
 	  d1 := L1!.n; d2 := L2!.n;
@@ -2497,13 +2498,13 @@ InstallGlobalFunction(SpinningAlgorithmNC,
 	end);
 
 # Mostly for internal use, but may be useful elsewhere
-InstallGlobalFunction(CoxeterLength, [IsPerm, IsPosInt],
+InstallGlobalFunction(CoxeterLength, # [IsPerm, IsPosInt],
 	function(sigma, n)
 		return Sum(List([1..n], i -> Size(Filtered([i+1..n], j -> i^sigma > j^sigma))));
 	end);
 
 # Mostly for internal use, but may be useful elsewhere
-InstallGlobalFunction(EnumerateStandardTableaux, [IsList],
+InstallGlobalFunction(EnumerateStandardTableaux, # [IsList],
 	function(lambda)
 		local recursive, lambda2;
 		lambda2 := StructuralCopy(lambda);
@@ -2535,7 +2536,7 @@ InstallGlobalFunction(EnumerateStandardTableaux, [IsList],
 	end);
 
 # Mostly for internal use, but may be useful elsewhere
-InstallGlobalFunction(ContentVector, [IsList],
+InstallGlobalFunction(ContentVector, # [IsList],
 	function(T)
 		local a, i, j;
 		a := List([1..Size(Flat(T))], i -> 0);
@@ -2548,7 +2549,7 @@ InstallGlobalFunction(ContentVector, [IsList],
 	end);
 
 # Mostly for internal use, but may be useful elsewhere
-InstallGlobalFunction(IsStdTableau, [IsList],
+InstallGlobalFunction(IsStdTableau, # [IsList],
 	function(T)
 		if ForAll([2..Size(T)], i -> ForAll([1..Size(T[i])], j -> T[i][j] > T[i-1][j])) then
 			if ForAll([1..Size(T)], i -> ForAll([2..Size(T[i])], j -> T[i][j] > T[i][j-1])) then
@@ -2561,7 +2562,7 @@ InstallGlobalFunction(IsStdTableau, [IsList],
 # Implements Young's "natural" Specht representation for S^lambda, where lambda
 # is a partition of some n >= 1. See G.D.James: "The Representation Theory of
 # the Symmetric Group", Example 25.2
-InstallGlobalFunction(NaturalSpechtRepresentation, [ IsList ],
+InstallGlobalFunction(NaturalSpechtRepresentation, # [ IsList ],
 	function(lambda)
 		local n, j, i, i_, std, rho, ai, lst, thislayer, newlayer, thislayer_pos,
 			newlayer_pos, Tj, pos, e, eI, gen;
@@ -2626,7 +2627,7 @@ InstallGlobalFunction(NaturalSpechtRepresentation, [ IsList ],
 MakeReadWriteGlobal("_DEBUG_OUTPUT@");
 _DEBUG_OUTPUT@ := false;
 
-InstallGlobalFunction(SetDebugOutput, [IsBool],
+InstallGlobalFunction(SetDebugOutput, # [IsBool],
 	function(b)
 		_DEBUG_OUTPUT@ := b;
 	end);
@@ -2647,7 +2648,7 @@ InstallGlobalFunction(_DebugWriteByte@,
 
 ##### Pretty output
 
-InstallGlobalFunction(CreateHTMLSummary, [IsString, IsString, IsString, IsZpOrder and IsZpOrderMultiMatrixRep],
+InstallGlobalFunction(CreateHTMLSummary, # [IsString, IsString, IsString, IsZpOrder and IsZpOrderMultiMatrixRep],
 	function(fd, title, gapfileprefix, A, loewyN)
 		local PartitionLatex2Html, out, i, j, k, P, loewyMOD, loewyINT, xx;
 
